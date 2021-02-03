@@ -3,5 +3,6 @@
         <file>qml/main.qml</file>
         <file>qml/Header.qml</file>
         <file>qml/ToolbarControls.qml</file>
+        <file>qml/ZoomableField.qml</file>
     </qresource>
 </RCC>

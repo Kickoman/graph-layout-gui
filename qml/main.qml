@@ -16,12 +16,14 @@ Rectangle {
             left: parent.left
         }
 
-        color: "gray"
+        border.width: 0
+        color: "#276678"
         title: "QmlApplication"
     }
 
     Rectangle {
         id: workplace
+//        color: "#d3e0ea"
         color: "red"
 
         anchors {
@@ -31,81 +33,33 @@ Rectangle {
             bottom: parent.bottom
         }
 
-        //
-        Flickable {
-            id: flickable
-            property double zoom: 1
+        ZoomableField {
+            id: field
+            canvasBackgroundColor: "#f6f5f5"
 
             anchors.fill: parent
 
-            contentWidth: 10000
-            contentHeight: 10000
-
-            onZoomChanged: {
-//                var zoomPoint = Qt.point(width / 2 + contentX,
-//                                         height / 2 + contentY)
-//                resizeContent(canvas.width * zoom, canvas.height * zoom, zoomPoint)
-                contentWidth = canvas.width * zoom
-                contentHeight = canvas.height * zoom
-                returnToBounds()
-            }
-
             Rectangle {
-                id: canvas
-                width: controls.widthSliderValue
-                height: controls.heightSliderValue
+                id: item
+                width: 10
+                height: 10
+                color: "black"
 
-                Behavior on width { SmoothedAnimation { velocity: 750 } }
-                Behavior on height { SmoothedAnimation { velocity: 750 } }
+                x: 10
+                y: 10
 
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.0
-                        color: "lightgreen"
-                    }
-                    GradientStop {
-                        position: 1.1
-                        color: "green"
-                    }
-                }
-
-                Rectangle {
-                    id: item
-                    width: 10
-                    height: 10
-                    color: "pink"
-
-                    Behavior on x { SmoothedAnimation { velocity: 100 } }
-                    Behavior on y { SmoothedAnimation { velocity: 100 } }
-                }
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onWheel: {
-                    var angleDeltaY = wheel.angleDelta.y
-                    var zoomIn = angleDeltaY > 0
-                    if (zoomIn)
-                    {
-                        flickable.zoom = flickable.zoom + angleDeltaY
-                    }
-                    else
-                    {
-                        flickable.zoom = flickable.zoom + angleDeltaY
-                        if (flickable.zoom < 1) flickable.zoom = 1
-                    }
-                }
+                Behavior on x { SmoothedAnimation { velocity: 100 } }
+                Behavior on y { SmoothedAnimation { velocity: 100 } }
             }
         }
 
         Text {
             id: debugText
-            text: "Actual canvas size: " + canvas.width + "x" + canvas.height +
-                  "\nZoom: " + flickable.zoom +
-                  "\nFlickable size: " + flickable.width + "x" + flickable.height +
-                  "\nPosition: " + flickable.contentX + ", " + flickable.contentY +
-                  "\nContent size:" + flickable.contentWidth + "x" + flickable.contentHeight
+            text: "Actual canvas size: " + field.width + "x" + field.height +
+                  "\nZoom: " + field.zoom +
+                  "\nFlickable size: " + field.width + "x" + field.height +
+                  "\nPosition: " + field.contentX + ", " + field.contentY +
+                  "\nContent size:" + field.contentWidth + "x" + field.contentHeight
 
             width: 300
             height: 100
@@ -118,6 +72,10 @@ Rectangle {
     ToolbarControls {
         id: controls
         width: 300
+        z: 10
+
+        backgroundColor: "#1687a7"
+        border.width: 0
 
         anchors {
             top: header.bottom
@@ -129,17 +87,7 @@ Rectangle {
             item.x = x
             item.y = y
         }
+
     }
 
-//    Rectangle {
-//        id: controls
-//        color: "blue"
-//        width: 300
-
-//        anchors {
-//            top: header.bottom
-//            right: parent.right
-//            bottom: parent.bottom
-//        }
-//    }
 }

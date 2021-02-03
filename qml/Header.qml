@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Rectangle {
-    property string backgroundColor: "yellow"
+    property string backgroundColor: "#276678"
     property string borderColor: "black"
     property string title: "The title"
 

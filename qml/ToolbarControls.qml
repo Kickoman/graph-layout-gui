@@ -19,6 +19,7 @@ Rectangle {
 
     ColumnLayout {
         anchors.fill: parent
+        spacing: 10
 
         GroupBox {
             id: canvasControlsGroupBox
@@ -112,6 +113,11 @@ Rectangle {
                     }
                 }
             }
+        }
+
+        Item {
+            id: filler
+            Layout.fillHeight: true
         }
     }
 }
