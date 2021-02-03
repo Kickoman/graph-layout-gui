@@ -23,8 +23,7 @@ Rectangle {
 
     Rectangle {
         id: workplace
-//        color: "#d3e0ea"
-        color: "red"
+        color: "#d3e0ea"
 
         anchors {
             top: header.bottom

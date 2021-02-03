@@ -16,6 +16,12 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUI
 
 add_executable(flickable-qml
   main.cpp
+  igraph.cpp
+  igraph.h
+  graphengine.cpp
+  graphengine.h
+  graphmodel.cpp
+  graphmodel.h
   qml.qrc
 )
 target_link_libraries(flickable-qml
