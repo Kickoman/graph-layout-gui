@@ -33,8 +33,8 @@ Rectangle {
                     var colNumber = getColNumber()
 
                     if (rowNumber % 2 == 0)
-                        return colNumber % 2 ? "gray" : "lightgray"
-                    return colNumber % 2 ? "lightgray" : "gray"
+                        return colNumber % 2 ? "#f6f5f5" : "#d3e0ea"
+                    return colNumber % 2 ? "#d3e0ea" : "#f6f5f5"
                 }
 
                 color: getColor()
