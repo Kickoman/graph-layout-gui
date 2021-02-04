@@ -1,5 +1,6 @@
 #include "randomgraphexample.h"
 #include <QDebug>
+#include <ctime>
 
 RandomGraphExample::RandomGraphExample(int nodes, int edges)
 {
@@ -45,7 +46,7 @@ void RandomGraphExample::generateRandom(int N, int M)
 
     if (M < N * (N - 1) / 2)
     {
-        unsigned int _seed = time(nullptr);
+        auto _seed = static_cast<unsigned int>(time(nullptr));
         qDebug() << "seed:" << _seed;
         srand(_seed);
 

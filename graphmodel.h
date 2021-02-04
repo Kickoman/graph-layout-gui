@@ -39,7 +39,7 @@ public:
     void recalculatePositions();
 
     Q_INVOKABLE
-    void setGraphCalculatorConfig(GraphCalculatorConfig config);
+    void setGraphCalculatorConfig(const GraphCalculatorConfig &config);
 
 signals:
     void positionsUpdated();

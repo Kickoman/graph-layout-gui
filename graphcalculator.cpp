@@ -1,4 +1,7 @@
 #include "graphcalculator.h"
+#include <array>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 GraphCalculator::GraphCalculator(IGraph *graph,
                                  QVector<QPointF> &positions,

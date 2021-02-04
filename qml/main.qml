@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
+import "Graph"
 
 Rectangle {
     id: root
@@ -38,18 +39,22 @@ Rectangle {
 
             anchors.fill: parent
 
-            Rectangle {
-                id: item
-                width: 10
-                height: 10
-                color: "black"
+            GraphView {
 
-                x: 10
-                y: 10
-
-                Behavior on x { SmoothedAnimation { velocity: 100 } }
-                Behavior on y { SmoothedAnimation { velocity: 100 } }
             }
+
+//            Rectangle {
+//                id: item
+//                width: 10
+//                height: 10
+//                color: "black"
+
+//                x: 10
+//                y: 10
+
+//                Behavior on x { SmoothedAnimation { velocity: 100 } }
+//                Behavior on y { SmoothedAnimation { velocity: 100 } }
+//            }
         }
 
         Text {

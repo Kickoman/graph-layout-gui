@@ -52,7 +52,7 @@ void GraphLayout::recalculatePositions()
     pool->start(calc);
 }
 
-void GraphLayout::setGraphCalculatorConfig(GraphCalculatorConfig config)
+void GraphLayout::setGraphCalculatorConfig(const GraphCalculatorConfig &config)
 {
     this->config = config;
 }

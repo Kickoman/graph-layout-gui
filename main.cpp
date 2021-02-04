@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQuickView>
 #include <QMessageBox>
 #include <QQmlError>
@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling);
     QCoreApplication::setApplicationName("Graph lab");
 
-    QGuiApplication a(argc, argv);
+    QApplication a(argc, argv);
     QQuickView view;
     view.setSource(QUrl("qrc:/qml/main.qml"));
     if (view.status() == QQuickView::Status::Error)

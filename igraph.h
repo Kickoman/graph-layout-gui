@@ -7,6 +7,7 @@
 class IGraph
 {
 public:
+    virtual ~IGraph() = default;
     virtual int nodesCount() const = 0;
     virtual int edgesCount() const = 0;
     virtual QVariant node(int index) const = 0;
