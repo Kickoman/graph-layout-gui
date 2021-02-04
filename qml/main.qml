@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import "Graph"
+import QtQuick.Shapes 1.12
 
 Rectangle {
     id: root
@@ -40,21 +41,51 @@ Rectangle {
             anchors.fill: parent
 
             GraphView {
+                model: graphModel
+                nodeDelegate: Rectangle {
+                    color: "#1687a7"
+                    height: 70
+                    width: 70
+                    z: parent.z + 2
 
+                    x: model.x - width / 2
+                    y: model.y - height / 2
+
+                    radius: 30
+
+                    Text {
+                        text: model.data
+                        anchors.centerIn: parent
+                    }
+
+                    MouseArea {
+                        id: liverbirdMouseArea
+                        property real lastZ: parent.z
+                        anchors.fill: parent
+
+                        drag.target: parent
+                        drag.axis: Drag.XandYAxis
+
+                        onReleased: {
+                            parent.z = lastZ
+                        }
+                        onPressed: {
+                            lastZ = parent.z
+                            parent.z = 1000
+                        }
+                    }
+
+                    Behavior on x {
+                        SmoothedAnimation { velocity: 700 }
+                    }
+                    Behavior on y {
+                        SmoothedAnimation { velocity: 700 }
+                    }
+
+                    onXChanged: model.x = x + width / 2
+                    onYChanged: model.y = y + height / 2
+                }
             }
-
-//            Rectangle {
-//                id: item
-//                width: 10
-//                height: 10
-//                color: "black"
-
-//                x: 10
-//                y: 10
-
-//                Behavior on x { SmoothedAnimation { velocity: 100 } }
-//                Behavior on y { SmoothedAnimation { velocity: 100 } }
-//            }
         }
 
         Text {

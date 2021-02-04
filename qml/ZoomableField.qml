@@ -39,6 +39,7 @@ Flickable {
         id: canvas
         width: controls.widthSliderValue
         height: controls.heightSliderValue
+        z: mouseArea.z + 1
 
         property double zoom: 1
         property double zoom_point_x: 0

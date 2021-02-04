@@ -24,6 +24,10 @@ add_executable(flickable-qml
   graphengine.h
   graphmodel.cpp
   graphmodel.h
+  graphnodesproxymodel.cpp
+  graphnodesproxymodel.h
+  graphlineproxymodel.cpp
+  graphlineproxymodel.h
   graphcalculator.cpp
   graphcalculator.h
   randomgraphexample.cpp

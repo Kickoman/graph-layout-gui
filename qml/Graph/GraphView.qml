@@ -1,11 +1,13 @@
 import QtQuick 2.0
 
+// Main Field
 Rectangle {
     id: root
     color: "gray"
     anchors.fill: parent
 
-//    property alias nodeDelegate: repeater.delegate
+    property alias nodeDelegate: repeater.delegate
+    property alias edgeDelegate: linesRepeater.delegate
     property var model: null
 
     Grid {
@@ -42,4 +44,31 @@ Rectangle {
         }
     }
 
+    Repeater {
+        id: repeater
+        model: root.model.getNodesModel()
+    }
+
+    Repeater {
+        id: linesRepeater
+        model: root.model.getEdgesModel()
+        delegate: GraphLine {
+            z: parent.z + 1
+            startX: model.startX
+            startY: model.startY
+            finishX: model.finishX
+            finishY: model.finishY
+
+            Component.onCompleted: {
+                console.log("Line from " + startX + ", " + startY + " to " + finishX + ", " + finishY)
+                console.log("Line is visible: " + visible)
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        console.log("Graph printed. Some info:")
+        console.log("Nodes count: " + repeater.count)
+        console.log("Edges coutn: " + linesRepeater.count)
+    }
 }

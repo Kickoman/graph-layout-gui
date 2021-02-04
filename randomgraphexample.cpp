@@ -40,6 +40,9 @@ bool RandomGraphExample::isAdjacent(int a, int b) const
 
 void RandomGraphExample::generateRandom(int N, int M)
 {
+    nodes.resize(N);
+    for (int i = 0; i < N; ++i) nodes[i] = QVariant(i);
+
     matrix.resize(N);
     for (auto &line : matrix)
         line.resize(N);
@@ -70,6 +73,7 @@ bool RandomGraphExample::addEdge(int a, int b)
     if (!matrix[a][b])
     {
         matrix[a][b] = matrix[b][a] = 1;
+        edgeList.append(qMakePair(a, b));
         return true;
     }
     return false;

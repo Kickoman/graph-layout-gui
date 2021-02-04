@@ -2,6 +2,10 @@
 #include <QQuickView>
 #include <QMessageBox>
 #include <QQmlError>
+#include <QQmlContext>
+
+#include "randomgraphexample.h"
+#include "graphmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +13,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Graph lab");
 
     QApplication a(argc, argv);
+
+    qDebug() << "Generating base graph";
+    auto graph = new RandomGraphExample(10, 15);
+    qDebug() << "Graph info. Nodes:" << graph->nodesCount() << "; edges:" << graph->edgesCount();
+    qDebug() << "Creating a model";
+    auto model = new GraphLayout(graph);
+    model->setRandomPositions();
+
+    qDebug() << "Creating view...";
     QQuickView view;
+    qDebug() << "Inserting a model into the view...";
+    view.rootContext()->setContextProperty("graphModel", model);
     view.setSource(QUrl("qrc:/qml/main.qml"));
     if (view.status() == QQuickView::Status::Error)
     {

@@ -1,10 +1,16 @@
 #include "graphmodel.h"
-
+#include "graphnodesproxymodel.h"
+#include "graphlineproxymodel.h"
 #include <QThreadPool>
+#include <QDebug>
 
 GraphLayout::GraphLayout(IGraph *graph)
     : graph(graph)
-{}
+    , nodesModel(nullptr)
+    , edgesModel(nullptr)
+{
+    positions.resize(graph->nodesCount());
+}
 
 int GraphLayout::nodesCount() const
 {
@@ -26,6 +32,15 @@ QPair<int, int> GraphLayout::edge(int index) const
     return graph->edge(index);
 }
 
+QVariant GraphLayout::edgeQml(int index) const
+{
+    auto e = edge(index);
+    QVariantMap var;
+    var["first"] = e.first;
+    var["second"] = e.second;
+    return var;
+}
+
 QVariant GraphLayout::edgeProperties(int index) const
 {
     return graph->edgeProperties(index);
@@ -43,6 +58,26 @@ double GraphLayout::getNodeYPosition(int index) const
     return indexOkay ? positions[index].y() : -1;
 }
 
+void GraphLayout::setNodeXPosition(int index, double x)
+{
+    if (!qFuzzyCompare(getNodeXPosition(index), x))
+    {
+        positions[index] = QPointF(x, getNodeYPosition(index));
+        emit positionUpdated(index);
+
+        qDebug() << "Position of " << index << "updated to " << x;
+    }
+}
+
+void GraphLayout::setNodeYPosition(int index, double y)
+{
+    if (!qFuzzyCompare(getNodeYPosition(index), y))
+    {
+        positions[index] = QPointF(getNodeXPosition(index), y);
+        emit positionUpdated(index);
+    }
+}
+
 void GraphLayout::recalculatePositions()
 {
     auto pool = QThreadPool::globalInstance();
@@ -52,7 +87,59 @@ void GraphLayout::recalculatePositions()
     pool->start(calc);
 }
 
+void GraphLayout::setRandomPositions()
+{
+    positions.resize(nodesCount());
+    auto area = std::max(config.nodeHeight * nodesCount(), config.nodeWidth * nodesCount());
+    for (auto &pos : positions)
+    {
+        double x = rand() % int(area);
+        double y = rand() % int(area);
+        pos = QPointF(x, y);
+    }
+    emit positionsUpdated();
+}
+
 void GraphLayout::setGraphCalculatorConfig(const GraphCalculatorConfig &config)
 {
     this->config = config;
+}
+
+void GraphLayout::setRepulsiveForce(const QString &formula)
+{
+    this->config.repulsiveForce = formula.toStdString();
+}
+
+void GraphLayout::setAttractiveForce(const QString &formula)
+{
+    this->config.attractiveForce = formula.toStdString();
+}
+
+void GraphLayout::setNodeSize(int width, int height)
+{
+    this->config.nodeWidth = width;
+    this->config.nodeHeight = height;
+}
+
+QVariant GraphLayout::getNodesModel()
+{
+    if (!nodesModel)
+    {
+        nodesModel = new GraphNodesProxyModel(this);
+    }
+    return QVariant::fromValue(nodesModel);
+}
+
+QVariant GraphLayout::getEdgesModel()
+{
+    if (!edgesModel)
+    {
+        edgesModel = new GraphLineProxyModel(this);
+    }
+    return QVariant::fromValue(edgesModel);
+}
+
+void GraphLayout::onGraphChanged()
+{
+    setRandomPositions();
 }
