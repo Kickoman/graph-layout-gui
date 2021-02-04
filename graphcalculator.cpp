@@ -93,6 +93,9 @@ void GraphCalculator::run()
             current_force = rotate(current_force, angle);
             force = add(force, current_force);
         }
+
+        positions[target_node] = QPointF(positions[target_node].x() + force[0],
+                                         positions[target_node].y() + force[1]);
     }
     emit finished();
 

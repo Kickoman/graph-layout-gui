@@ -10,12 +10,15 @@ Rectangle {
     property alias heightSliderValue: heightSlider.value
     property alias widthSliderValue: widthSlider.value
 
+    property alias repulsiveFormula: repulsiveInput.text
+    property alias attractiveFormula: attractiveInput.text
+
     color: backgroundColor
     border.color: borderColor
 
     signal canvasWidthSliderChanged(double value)
     signal canvasHeightSliderChanged(double value)
-    signal rectanglePositionChangeRequested(double x, double y)
+    signal graphRearrangeRequested()
 
     ColumnLayout {
         anchors.fill: parent
@@ -72,8 +75,8 @@ Rectangle {
         }
 
         GroupBox {
-            id: tempButtonGroupBox
-            title: "Temporary buttons"
+            id: graphControlsGroupBox
+            title: "Graph controls"
 
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
@@ -86,31 +89,25 @@ Rectangle {
                 columnSpacing: 10
 
                 Text {
-                    text: "X position"
+                    text: "Attractive formula:"
                 }
-
                 TextInput {
-                    id: xPosition
-                    text: "100"
+                    id: attractiveInput
+                    text: "log10(x/10)"
                 }
 
                 Text {
-                    text: "Y position"
+                    text: "Repulsive formula:"
                 }
-
                 TextInput {
-                    id: yPosition
-                    text: "100"
+                    id: repulsiveInput
+                    text: "log10(x/10)"
                 }
 
                 Button {
-                    id: requestPositionChangeButton
-                    text: "Move rectangle"
-                    onClicked: {
-                        var xpos = parseInt(xPosition.text)
-                        var ypos = parseInt(yPosition.text)
-                        rectanglePositionChangeRequested(xpos, ypos)
-                    }
+                    Layout.columnSpan: 2
+                    text: "Rearrange graph"
+                    onClicked: graphRearrangeRequested()
                 }
             }
         }

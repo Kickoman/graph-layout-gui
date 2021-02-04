@@ -64,8 +64,6 @@ void GraphLayout::setNodeXPosition(int index, double x)
     {
         positions[index] = QPointF(x, getNodeYPosition(index));
         emit positionUpdated(index);
-
-        qDebug() << "Position of " << index << "updated to " << x;
     }
 }
 

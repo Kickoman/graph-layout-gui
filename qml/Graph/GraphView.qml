@@ -58,17 +58,6 @@ Rectangle {
             startY: model.startY
             finishX: model.finishX
             finishY: model.finishY
-
-            Component.onCompleted: {
-                console.log("Line from " + startX + ", " + startY + " to " + finishX + ", " + finishY)
-                console.log("Line is visible: " + visible)
-            }
         }
-    }
-
-    Component.onCompleted: {
-        console.log("Graph printed. Some info:")
-        console.log("Nodes count: " + repeater.count)
-        console.log("Edges coutn: " + linesRepeater.count)
     }
 }

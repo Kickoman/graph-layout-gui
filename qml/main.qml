@@ -76,10 +76,10 @@ Rectangle {
                     }
 
                     Behavior on x {
-                        SmoothedAnimation { velocity: 700 }
+                        SmoothedAnimation { velocity: 200 }
                     }
                     Behavior on y {
-                        SmoothedAnimation { velocity: 700 }
+                        SmoothedAnimation { velocity: 200 }
                     }
 
                     onXChanged: model.x = x + width / 2
@@ -118,11 +118,12 @@ Rectangle {
             bottom: parent.bottom
         }
 
-        onRectanglePositionChangeRequested: {
-            item.x = x
-            item.y = y
-        }
 
+        onGraphRearrangeRequested: {
+            graphModel.setRepulsiveForce(controls.repulsiveFormula)
+            graphModel.setAttractiveForce(controls.attractiveFormula)
+            graphModel.recalculatePositions()
+        }
     }
 
 }
