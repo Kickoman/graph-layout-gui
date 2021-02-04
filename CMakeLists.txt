@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 
+add_subdirectory(kmisc)
+
 add_executable(flickable-qml
   main.cpp
   igraph.cpp
@@ -22,6 +24,10 @@ add_executable(flickable-qml
   graphengine.h
   graphmodel.cpp
   graphmodel.h
+  graphcalculator.cpp
+  graphcalculator.h
+  randomgraphexample.cpp
+  randomgraphexample.h
   qml.qrc
 )
 target_link_libraries(flickable-qml
@@ -29,4 +35,5 @@ target_link_libraries(flickable-qml
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Qml
     Qt${QT_VERSION_MAJOR}::QuickWidgets
+    kmisc
 )

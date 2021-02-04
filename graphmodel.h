@@ -1,28 +1,55 @@
 #ifndef GRAPHMODEL_H
 #define GRAPHMODEL_H
 
-#include <QAbstractItemModel>
-#include <QSharedPointer>
-#include "graphengine.h"
+#include <QObject>
+#include <QVector>
+#include <QPointF>
+#include <QMutex>
+#include "igraph.h"
+#include "graphcalculator.h"
 
-class GraphModel
+class GraphLayout : public QObject
 {
+    Q_OBJECT
 public:
-    GraphModel(const QSharedPointer<GraphEngine> &graphEngine);
+    GraphLayout(IGraph *graph);
 
-    QVariantList getAllNodes() const;
-    QVariantList getAllLinks() const;
-    int getNodeIndexByGuid(const QString &guid) const;
-    double getNodePosition(int index) const;
+    Q_INVOKABLE
+    int nodesCount() const;
 
+    Q_INVOKABLE
+    int edgesCount() const;
+
+    Q_INVOKABLE
+    QVariant node(int index) const;
+
+    Q_INVOKABLE
+    QPair<int, int> edge(int index) const;
+
+    Q_INVOKABLE
+    QVariant edgeProperties(int index) const;
+
+    Q_INVOKABLE
+    double getNodeXPosition(int index) const;
+
+    Q_INVOKABLE
+    double getNodeYPosition(int index) const;
+
+    Q_INVOKABLE
     void recalculatePositions();
+
+    Q_INVOKABLE
+    void setGraphCalculatorConfig(GraphCalculatorConfig config);
 
 signals:
     void positionsUpdated();
     void positionUpdated(int nodeIndex);
 
 private:
-    QSharedPointer<GraphEngine> graphEngine;
+    mutable QMutex positionsLock;
+    QVector<QPointF> positions;
+    GraphCalculatorConfig config;
+    IGraph *graph;
 };
 
 #endif // GRAPHMODEL_H

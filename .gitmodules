@@ -1,0 +1,4 @@
+[submodule "kmisc"]
+	path = kmisc
+	url = https://git.karasique.xyz/K-Dev/KMisc.git
+	branch = dev-lib-cmake
