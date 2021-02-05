@@ -16,6 +16,9 @@ struct GraphCalculatorConfig
 
     double nodeWidth = 100;
     double nodeHeight = 100;
+
+    double frameWidth = 1000;
+    double frameHeight = 1000;
 };
 
 

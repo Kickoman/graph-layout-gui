@@ -64,6 +64,9 @@ public:
     void setNodeSize(int width, int height);
 
     Q_INVOKABLE
+    void setFrameSize(int width, int height);
+
+    Q_INVOKABLE
     QVariant getNodesModel();
 
     Q_INVOKABLE

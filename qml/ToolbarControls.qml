@@ -19,6 +19,7 @@ Rectangle {
     signal canvasWidthSliderChanged(double value)
     signal canvasHeightSliderChanged(double value)
     signal graphRearrangeRequested()
+    signal graphRandomizeRequested()
 
     ColumnLayout {
         anchors.fill: parent
@@ -106,8 +107,16 @@ Rectangle {
 
                 Button {
                     Layout.columnSpan: 2
+                    Layout.fillWidth: true
                     text: "Rearrange graph"
                     onClicked: graphRearrangeRequested()
+                }
+
+                Button {
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    text: "Random positions"
+                    onClicked: graphRandomizeRequested()
                 }
             }
         }

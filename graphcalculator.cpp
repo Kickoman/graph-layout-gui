@@ -94,8 +94,15 @@ void GraphCalculator::run()
             force = add(force, current_force);
         }
 
-        positions[target_node] = QPointF(positions[target_node].x() + force[0],
-                                         positions[target_node].y() + force[1]);
+
+        double new_x = positions[target_node].x() + force[0];
+        double new_y = positions[target_node].y() + force[1];
+
+        new_x = std::max(config.nodeWidth / 2, new_x);
+        new_x = std::min(config.frameWidth - config.nodeWidth / 2, new_x);
+        new_y = std::max(config.nodeHeight / 2, new_y);
+        new_y = std::min(config.frameHeight - config.nodeHeight / 2, new_y);
+        positions[target_node] = QPointF(new_x, new_y);
     }
     emit finished();
 

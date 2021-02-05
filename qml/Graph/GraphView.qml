@@ -60,4 +60,12 @@ Rectangle {
             finishY: model.finishY
         }
     }
+
+    Component.onCompleted: {
+        graphModel.setNodeSize(75, 75)
+        graphModel.setFrameSize(root.width, root.height)
+    }
+
+    onHeightChanged: graphModel.setFrameSize(root.width, root.height)
+    onWidthChanged: graphModel.setFrameSize(root.width, root.height)
 }

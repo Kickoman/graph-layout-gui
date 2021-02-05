@@ -119,6 +119,12 @@ void GraphLayout::setNodeSize(int width, int height)
     this->config.nodeHeight = height;
 }
 
+void GraphLayout::setFrameSize(int width, int height)
+{
+    this->config.frameWidth = width;
+    this->config.frameHeight = height;
+}
+
 QVariant GraphLayout::getNodesModel()
 {
     if (!nodesModel)

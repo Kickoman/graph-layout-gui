@@ -38,7 +38,7 @@ QHash<int, QByteArray> GraphNodesProxyModel::roleNames() const
 
 Qt::ItemFlags GraphNodesProxyModel::flags(const QModelIndex &index) const
 {
-    return QAbstractListModel::flags(index) | Qt::ItemFlag::ItemIsEditable;
+    return QAbstractListModel::flags(index)/* | Qt::ItemFlag::ItemIsEditable*/;
 }
 
 bool GraphNodesProxyModel::setData(const QModelIndex &index, const QVariant &value, int role)

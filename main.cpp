@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     qDebug() << "Generating base graph";
-    auto graph = new RandomGraphExample(10, 15);
+    auto graph = new RandomGraphExample(2, 1);
     qDebug() << "Graph info. Nodes:" << graph->nodesCount() << "; edges:" << graph->edgesCount();
     qDebug() << "Creating a model";
     auto model = new GraphLayout(graph);
