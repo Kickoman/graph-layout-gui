@@ -9,7 +9,7 @@
 class RandomGraphExample : public IGraph
 {
 public:
-    RandomGraphExample(int nodes, int edges);
+    RandomGraphExample(int nodes, int edges, unsigned int seed = 0);
 
     int nodesCount() const override;
     int edgesCount() const;
@@ -25,7 +25,7 @@ private:
     using Edge = QPair<int, int>;
     using EdgeList = QVector<Edge>;
 
-    void generateRandom(int N, int M);
+    void generateRandom(int N, int M, unsigned int seed = 0);
     bool addEdge(int a, int b);
 
     QVector<QVariant> nodes;

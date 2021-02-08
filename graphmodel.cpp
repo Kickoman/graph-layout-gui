@@ -82,6 +82,7 @@ void GraphLayout::recalculatePositions()
     auto calc = new GraphCalculator(graph, positions, positionsLock, config);
     calc->setAutoDelete(true);
     connect(calc, &GraphCalculator::finished, this, &GraphLayout::positionsUpdated);
+    connect(calc, &GraphCalculator::updated, this, &GraphLayout::positionsUpdated);
     pool->start(calc);
 }
 

@@ -2,9 +2,9 @@
 #include <QDebug>
 #include <ctime>
 
-RandomGraphExample::RandomGraphExample(int nodes, int edges)
+RandomGraphExample::RandomGraphExample(int nodes, int edges, unsigned int seed)
 {
-    generateRandom(nodes, edges);
+    generateRandom(nodes, edges, seed);
 }
 
 int RandomGraphExample::nodesCount() const
@@ -38,7 +38,7 @@ bool RandomGraphExample::isAdjacent(int a, int b) const
     return matrix[a][b];
 }
 
-void RandomGraphExample::generateRandom(int N, int M)
+void RandomGraphExample::generateRandom(int N, int M, unsigned int seed)
 {
     nodes.resize(N);
     for (int i = 0; i < N; ++i) nodes[i] = QVariant(i);
@@ -49,7 +49,7 @@ void RandomGraphExample::generateRandom(int N, int M)
 
     if (M < N * (N - 1) / 2)
     {
-        auto _seed = static_cast<unsigned int>(time(nullptr));
+        unsigned int _seed = seed == 0 ? static_cast<unsigned int>(time(nullptr)) : seed;
         qDebug() << "seed:" << _seed;
         srand(_seed);
 
@@ -63,14 +63,17 @@ void RandomGraphExample::generateRandom(int N, int M)
     else
     {
         qDebug() << "Full graph";
-        for (auto &line : matrix)
-            line.fill(1);
+//        for (auto &line : matrix)
+//            line.fill(1);
+        for (int i = 0; i < N - 1; ++i)
+            for (int j = i + 1; j < N; ++j)
+                addEdge(i, j);
     }
 }
 
 bool RandomGraphExample::addEdge(int a, int b)
 {
-    if (!matrix[a][b])
+    if (!matrix[a][b] && a != b)
     {
         matrix[a][b] = matrix[b][a] = 1;
         edgeList.append(qMakePair(a, b));

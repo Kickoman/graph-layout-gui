@@ -34,6 +34,7 @@ public:
     void run() override;
 
 signals:
+    void updated();
     void finished();
 
 private:
