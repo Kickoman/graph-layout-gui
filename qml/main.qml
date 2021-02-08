@@ -42,64 +42,7 @@ Rectangle {
 
             GraphView {
                 model: graphModel
-                nodeDelegate: Rectangle {
-                    color: "#1687a7"
-                    height: 70
-                    width: 70
-                    z: parent.z + 2
-
-//                    x: model.x - width / 2
-//                    y: model.y - height / 2
-
-                    Component.onCompleted: {
-                        x = model.x - width / 2
-                        y = model.y - height / 2
-                    }
-
-                    onDataChanged: {
-
-                    }
-
-                    radius: 30
-
-                    Text {
-                        text: model.data
-                        anchors.centerIn: parent
-                    }
-
-                    Text {
-                        text: "{" + parent.x + "; " + parent.y + "}"
-                        anchors.bottom: parent.bottom
-                    }
-
-                    MouseArea {
-                        id: liverbirdMouseArea
-                        property real lastZ: parent.z
-                        anchors.fill: parent
-
-                        drag.target: parent
-                        drag.axis: Drag.XandYAxis
-
-                        onReleased: {
-                            parent.z = lastZ
-                        }
-                        onPressed: {
-                            lastZ = parent.z
-                            parent.z = 1000
-                        }
-                    }
-
-                    Behavior on x {
-                        SmoothedAnimation { velocity: 200 }
-                    }
-                    Behavior on y {
-                        SmoothedAnimation { velocity: 200 }
-                    }
-
-
-//                    onXChanged: model.x = x + width / 2
-//                    onYChanged: model.y = y + height / 2
-                }
+                nodeDelegate: GraphNode { }
             }
         }
 

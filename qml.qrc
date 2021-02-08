@@ -6,5 +6,6 @@
         <file>qml/ZoomableField.qml</file>
         <file>qml/Graph/GraphView.qml</file>
         <file>qml/Graph/GraphLine.qml</file>
+        <file>qml/Graph/GraphNode.qml</file>
     </qresource>
 </RCC>
