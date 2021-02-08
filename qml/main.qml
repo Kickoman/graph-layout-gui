@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.15
 import "Graph"
 import QtQuick.Shapes 1.12
 
@@ -29,7 +29,7 @@ Rectangle {
 
         anchors {
             top: header.bottom
-            right: controls.left
+            right: controlsScroll.left
             left: parent.left
             bottom: parent.bottom
         }
@@ -62,13 +62,11 @@ Rectangle {
         }
     }
 
-    ToolbarControls {
-        id: controls
-        width: 300
-        z: 10
+    ScrollView {
+        id: controlsScroll
 
-        backgroundColor: "#1687a7"
-        border.width: 0
+        width: 300
+        clip: true
 
         anchors {
             top: header.bottom
@@ -76,16 +74,30 @@ Rectangle {
             bottom: parent.bottom
         }
 
+        contentWidth: 300
+        contentHeight: controls.height
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+        ToolbarControls {
+            id: controls
+            width: 300
+            z: 10
 
-        onGraphRearrangeRequested: {
-            graphModel.setRepulsiveForce(controls.repulsiveFormula)
-            graphModel.setAttractiveForce(controls.attractiveFormula)
-            graphModel.recalculatePositions()
-        }
+            backgroundColor: "#1687a7"
+            border.width: 0
 
-        onGraphRandomizeRequested: {
-            graphModel.setRandomPositions()
+//            anchors.fill: parent
+            height: 1000
+
+
+            onGraphRearrangeRequested: {
+                graphModel.setRepulsiveForce(controls.repulsiveFormula)
+                graphModel.setAttractiveForce(controls.attractiveFormula)
+                graphModel.recalculatePositions()
+            }
+
+            onGraphRandomizeRequested: {
+                graphModel.setRandomPositions()
+            }
         }
     }
-
 }

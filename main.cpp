@@ -5,6 +5,7 @@
 #include <QQmlContext>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QInputDialog>
 
 #include "randomgraphexample.h"
 #include "graphmodel.h"
@@ -23,8 +24,11 @@ int main(int argc, char *argv[])
 
     unsigned seed = parser.value(seedOption).toUInt();
 
+    int nodes = QInputDialog::getInt(nullptr, "Nodes", "Nodes", 5, 0, 1000);
+    int edges = QInputDialog::getInt(nullptr, "Edges", "Edges", 5, 0, 1000);
+
     qDebug() << "Generating base graph";
-    auto graph = new RandomGraphExample(4, 6, seed);
+    auto graph = new RandomGraphExample(nodes, edges, seed);
     qDebug() << "Graph info. Nodes:" << graph->nodesCount() << "; edges:" << graph->edgesCount();
     qDebug() << "Creating a model";
     auto model = new GraphLayout(graph);

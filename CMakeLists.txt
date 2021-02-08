@@ -16,24 +16,46 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUI
 
 add_subdirectory(kmisc)
 
-add_executable(flickable-qml
-  main.cpp
-  igraph.cpp
-  igraph.h
-  graphengine.cpp
-  graphengine.h
-  graphmodel.cpp
-  graphmodel.h
-  graphnodesproxymodel.cpp
-  graphnodesproxymodel.h
-  graphlineproxymodel.cpp
-  graphlineproxymodel.h
-  graphcalculator.cpp
-  graphcalculator.h
-  randomgraphexample.cpp
-  randomgraphexample.h
-  qml.qrc
-)
+if (ANDROID)
+    add_library(flickable-qml SHARED
+      main.cpp
+      igraph.cpp
+      igraph.h
+      graphengine.cpp
+      graphengine.h
+      graphmodel.cpp
+      graphmodel.h
+      graphnodesproxymodel.cpp
+      graphnodesproxymodel.h
+      graphlineproxymodel.cpp
+      graphlineproxymodel.h
+      graphcalculator.cpp
+      graphcalculator.h
+      randomgraphexample.cpp
+      randomgraphexample.h
+      qml.qrc
+    )
+else()
+    add_executable(flickable-qml
+      main.cpp
+      igraph.cpp
+      igraph.h
+      graphengine.cpp
+      graphengine.h
+      graphmodel.cpp
+      graphmodel.h
+      graphnodesproxymodel.cpp
+      graphnodesproxymodel.h
+      graphlineproxymodel.cpp
+      graphlineproxymodel.h
+      graphcalculator.cpp
+      graphcalculator.h
+      randomgraphexample.cpp
+      randomgraphexample.h
+      qml.qrc
+    )
+endif()
+
 target_link_libraries(flickable-qml
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
