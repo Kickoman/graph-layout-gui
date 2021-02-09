@@ -164,6 +164,69 @@ void GraphCalculator::run()
                                       .arg(forces[i][0])
                                       .arg(forces[i][1]);
 
+        // Compute repulsive forces from frame edges
+        for (int target_node = 0; target_node < N; ++target_node)
+        {
+            // from top
+            auto dist = positions.at(target_node).y();
+            auto dir_vector = Vector{0, -1};
+            auto force_scalar = config.repulsiveForce(dist);
+            auto force_vector = Vector{force_scalar, 0};
+            auto angle = getAngleOrRandom(force_vector, dir_vector);
+            force_vector = rotate(force_vector, angle);
+            forces[target_node] = add(forces[target_node], force_vector);
+
+            // from bottom
+            dist = config.frameHeight - positions.at(target_node).y();
+            dir_vector = Vector{0, 1};
+            force_scalar = config.repulsiveForce(dist);
+            force_vector = Vector{force_scalar, 0};
+            angle = getAngleOrRandom(force_vector, dir_vector);
+            force_vector = rotate(force_vector, angle);
+            forces[target_node] = add(forces[target_node], force_vector);
+
+            // from left
+            dist = positions.at(target_node).x();
+            dir_vector = Vector{1, 0};
+            force_scalar = config.repulsiveForce(dist);
+            force_vector = Vector{force_scalar, 0};
+            angle = getAngleOrRandom(force_vector, dir_vector);
+            force_vector = rotate(force_vector, angle);
+            forces[target_node] = add(forces[target_node], force_vector);
+
+            // from right
+            dist = config.frameWidth - positions.at(target_node).x();
+            dir_vector = Vector{-1, 0};
+            force_scalar = config.repulsiveForce(dist);
+            force_vector = Vector{force_scalar, 0};
+            angle = getAngleOrRandom(force_vector, dir_vector);
+            force_vector = rotate(force_vector, angle);
+            forces[target_node] = add(forces[target_node], force_vector);
+
+            //            if (target_node == other_node) continue;
+
+            //            auto my_pos = positions.at(target_node);
+            //            auto it_pos = positions.at(other_node);
+            //            auto dist = distance(my_pos, it_pos);
+            //            auto dir_vector = vec_from_point(it_pos, my_pos);
+
+            //            //                auto force_scalar = dist * dist / 10000;
+            //            //                auto force_scalar = dist > 0 ? -10000/dist : 1000;
+            //            auto force_scalar = config.repulsiveForce(dist);
+            //            if (qIsNaN(force_scalar))
+            //            {
+            //                qDebug() << "force is nan";
+            //                force_scalar = INT_MAX;
+            //            }
+
+            //            auto force_vector = Vector{force_scalar, 0};
+            //            auto angle = getAngleOrRandom(force_vector, dir_vector);
+            //            force_vector = rotate(force_vector, angle);
+
+            //            forces[target_node] = add(forces[target_node], force_vector);
+
+        }
+
         for (int node = 0; node < N; ++node)
         {
             double new_x = positions[node].x();
@@ -179,6 +242,8 @@ void GraphCalculator::run()
 
             positions[node] = QPointF(new_x, new_y);
         }
+
+
         lock.unlock();
         emit updated();
         temperature /= 1.05;
