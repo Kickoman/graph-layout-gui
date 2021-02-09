@@ -8,6 +8,8 @@ Flickable {
     default property alias children : canvas.children
     property alias zoom: canvas.zoom
     property alias canvasBackgroundColor: canvas.color
+    property alias canvasWidth: canvas.width
+    property alias canvasHeight: canvas.height
     property alias contentWidth: flickable.contentWidth
     property alias contentHeight: flickable.contentHeight
     property alias canvas: canvas

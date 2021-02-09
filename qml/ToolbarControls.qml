@@ -94,7 +94,7 @@ Rectangle {
                 }
                 TextInput {
                     id: attractiveInput
-                    text: "x*x/(2*sqrt(1000*1000/5))"
+                    text: "exp((x-100)/1000)"
                 }
 
                 Text {
@@ -102,7 +102,7 @@ Rectangle {
                 }
                 TextInput {
                     id: repulsiveInput
-                    text: "-(1000*1000/5)^2/x"
+                    text: "exp(-(x-500)/70)"
                 }
 
                 Button {
