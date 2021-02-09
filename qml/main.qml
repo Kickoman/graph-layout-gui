@@ -92,6 +92,7 @@ Rectangle {
             onGraphRearrangeRequested: {
                 graphModel.setRepulsiveForce(controls.repulsiveFormula)
                 graphModel.setAttractiveForce(controls.attractiveFormula)
+                graphModel.setFrameSize(field.contentWidth, field.contentHeight)
                 graphModel.recalculatePositions()
             }
 
