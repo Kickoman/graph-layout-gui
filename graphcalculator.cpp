@@ -29,6 +29,18 @@ void GraphCalculator::run()
         res[1] = a[1] + b[1];
         return res;
     };
+    auto multiply   = [](const Vector a, double number) -> Vector {
+        Vector res;
+        res[0] = a[0] * number;
+        res[1] = a[1] * number;
+        return res;
+    };
+    auto divide     = [](const Vector a, double number) -> Vector {
+        Vector res;
+        res[0] = a[0] / number;
+        res[1] = a[1] / number;
+        return res;
+    };
     auto dot        = [](const Vector a, const Vector b) -> double {
         return a[0]*b[0] + a[1]*b[1];
     };
@@ -81,19 +93,17 @@ void GraphCalculator::run()
                 auto it_pos = positions.at(other_node);
                 auto dist = distance(my_pos, it_pos);
                 auto dir_vector = vec_from_point(it_pos, my_pos);
-
-//                auto force_scalar = dist * dist / 10000;
-//                auto force_scalar = dist > 0 ? -10000/dist : 1000;
+                auto unit_vector = divide(dir_vector, magnitude(dir_vector));
                 auto force_scalar = config.repulsiveForce(dist);
                 if (qIsNaN(force_scalar))
                 {
                     qDebug() << "force is nan";
                     force_scalar = INT_MAX;
                 }
-
-                auto force_vector = Vector{force_scalar, 0};
-                auto angle = getAngleOrRandom(force_vector, dir_vector);
-                force_vector = rotate(force_vector, angle);
+                auto force_vector = multiply(unit_vector, force_scalar);
+//                auto force_vector = Vector{force_scalar, 0};
+//                auto angle = getAngleOrRandom(force_vector, dir_vector);
+//                force_vector = rotate(force_vector, angle);
 
                 forces[target_node] = add(forces[target_node], force_vector);
             }
@@ -120,6 +130,9 @@ void GraphCalculator::run()
             auto dir1 = vec_from_point(pos1, pos2);
             auto dir2 = vec_from_point(pos2, pos1);
 
+            auto unit1 = divide(dir1, magnitude(dir1));
+            auto unit2 = divide(dir2, magnitude(dir2));
+
             auto force_scalar = config.attractiveForce(dist);
 //            auto force_scalar = dist > 0 ? -100/dist : 1000;
 //            auto force_scalar = dist * dist / 100;
@@ -130,11 +143,14 @@ void GraphCalculator::run()
             }
 
             auto force_vector = Vector{force_scalar, 0};
-            auto angle1 = getAngleOrRandom(force_vector, dir1);
-            auto angle2 = getAngleOrRandom(force_vector, dir2);
+//            auto angle1 = getAngleOrRandom(force_vector, dir1);
+//            auto angle2 = getAngleOrRandom(force_vector, dir2);
 
-            auto force_vector_1 = rotate(force_vector, angle1);
-            auto force_vector_2 = rotate(force_vector, angle2);
+//            auto force_vector_1 = rotate(force_vector, angle1);
+//            auto force_vector_2 = rotate(force_vector, angle2);
+
+            auto force_vector_1 = multiply(unit1, force_scalar);
+            auto force_vector_2 = multiply(unit2, force_scalar);
 
             forces[edge.first] = add(forces[edge.first], force_vector_1);
             forces[edge.second] = add(forces[edge.second], force_vector_2);
@@ -165,8 +181,8 @@ void GraphCalculator::run()
         }
         lock.unlock();
         emit updated();
-        temperature /= 1.3;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        temperature /= 1.05;
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     emit finished();
