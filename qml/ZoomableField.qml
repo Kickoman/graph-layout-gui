@@ -14,6 +14,8 @@ Flickable {
     property alias contentHeight: flickable.contentHeight
     property alias canvas: canvas
 
+    signal doubleClicked()
+
     function setZoom(zoom, zoom_point_x, zoom_point_y) {
         if (zoom < 0.1) {
             zoom = 0.1
@@ -66,6 +68,7 @@ Flickable {
             var sign = wheel.angleDelta.y > 0 ? 1 : -1
             setZoom(canvas.zoom + 0.1 * sign, mouseX, mouseY)
         }
+        onDoubleClicked: flickable.doubleClicked()
     }
 }
 

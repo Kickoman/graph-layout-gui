@@ -84,7 +84,7 @@ Rectangle {
 
             GridLayout {
                 anchors.fill: parent
-                anchors.margins: 10
+                anchors.margins: 5
                 columns: 2
                 rowSpacing: 10
                 columnSpacing: 10
@@ -92,7 +92,10 @@ Rectangle {
                 Text {
                     text: "Attractive formula:"
                 }
-                TextInput {
+
+                TextField {
+                    Layout.fillWidth: true
+                    width: 50
                     id: attractiveInput
                     text: "exp((x-100)/1000)"
                 }
@@ -100,7 +103,8 @@ Rectangle {
                 Text {
                     text: "Repulsive formula:"
                 }
-                TextInput {
+                TextField {
+                    Layout.fillWidth: true
                     id: repulsiveInput
                     text: "exp(-(x-500)/70)"
                 }
@@ -124,6 +128,7 @@ Rectangle {
         Item {
             id: filler
             Layout.fillHeight: true
+            Layout.fillWidth: true
         }
     }
 }

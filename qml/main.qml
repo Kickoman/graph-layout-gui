@@ -44,6 +44,8 @@ Rectangle {
                 model: graphModel
                 nodeDelegate: GraphNode { }
             }
+
+            onDoubleClicked: controlsScroll.toggleVisibility()
         }
 
         Text {
@@ -68,6 +70,16 @@ Rectangle {
         width: 300
         clip: true
 
+        function toggleVisibility() {
+            if (visible) {
+                width = 0
+                visible = false
+            } else {
+                width = 300
+                visible = true
+            }
+        }
+
         anchors {
             top: header.bottom
             right: parent.right
@@ -79,13 +91,13 @@ Rectangle {
         ScrollBar.vertical.policy: ScrollBar.AlwaysOn
         ToolbarControls {
             id: controls
-            width: 300
+
             z: 10
 
             backgroundColor: "#1687a7"
             border.width: 0
 
-//            anchors.fill: parent
+            anchors.fill: parent
             height: 1000
 
 
