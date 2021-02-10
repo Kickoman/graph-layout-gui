@@ -33,6 +33,8 @@ if (ANDROID)
       graphcalculator.h
       randomgraphexample.cpp
       randomgraphexample.h
+      twodvector.cpp
+      twodvector.h
       qml.qrc
     )
 else()
@@ -52,6 +54,8 @@ else()
       graphcalculator.h
       randomgraphexample.cpp
       randomgraphexample.h
+      twodvector.cpp
+      twodvector.h
       qml.qrc
     )
 endif()

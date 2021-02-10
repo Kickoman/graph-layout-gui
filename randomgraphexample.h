@@ -12,12 +12,12 @@ public:
     RandomGraphExample(int nodes, int edges, unsigned int seed = 0);
 
     int nodesCount() const override;
-    int edgesCount() const;
-    QVariant node(int index) const;
-    QPair<int, int> edge(int index) const;
-    QVariant edgeProperties(int index) const;
+    int edgesCount() const override;
+    QVariant node(int index) const override;
+    QPair<int, int> edge(int index) const override;
+    QVariant edgeProperties(int index) const override;
 
-    bool isAdjacent(int a, int b) const;
+    bool isAdjacent(int a, int b) const override;
 
 private:
     using AdjacencyRow = QVector<int>;
