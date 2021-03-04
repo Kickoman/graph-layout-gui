@@ -7,5 +7,6 @@
         <file>qml/Graph/GraphView.qml</file>
         <file>qml/Graph/GraphLine.qml</file>
         <file>qml/Graph/GraphNode.qml</file>
+        <file>qml/RoundGraphNode.qml</file>
     </qresource>
 </RCC>

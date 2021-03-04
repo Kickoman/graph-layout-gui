@@ -1,9 +1,7 @@
 import QtQuick 2.0
 
-Rectangle {
-    color: "#1687a7"
-    height: 70
-    width: 70
+Item {
+
     z: parent.z + 2
     x: isDragged ? x : translateXFromModel(model.x)
     y: isDragged ? y : translateYFromModel(model.y)
@@ -33,18 +31,6 @@ Rectangle {
             updateModelX()
             updateModelY()
         }
-    }
-
-    radius: 30
-
-    Text {
-        text: model.data
-        anchors.centerIn: parent
-    }
-
-    Text {
-        text: "{" + parent.x + "; " + parent.y + "}"
-        anchors.bottom: parent.bottom
     }
 
     MouseArea {

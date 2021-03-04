@@ -19,7 +19,6 @@ add_subdirectory(kmisc)
 if (ANDROID)
     add_library(flickable-qml SHARED
       main.cpp
-      igraph.cpp
       igraph.h
       graphengine.cpp
       graphengine.h
@@ -40,7 +39,6 @@ if (ANDROID)
 else()
     add_executable(flickable-qml
       main.cpp
-      igraph.cpp
       igraph.h
       graphengine.cpp
       graphengine.h

@@ -78,8 +78,8 @@ void GraphLayout::setNodeYPosition(int index, double y)
 
 void GraphLayout::recalculatePositions()
 {
-    auto pool = QThreadPool::globalInstance();
-    auto calc = new GraphCalculator(graph, positions, positionsLock, config);
+    auto *pool = QThreadPool::globalInstance();
+    auto *calc = new GraphCalculator(graph, positions, positionsLock, config);
     calc->setAutoDelete(true);
     connect(calc, &GraphCalculator::finished, this, &GraphLayout::positionsUpdated);
     connect(calc, &GraphCalculator::updated, this, &GraphLayout::positionsUpdated);
