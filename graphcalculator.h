@@ -32,7 +32,6 @@ public:
                     GraphCalculatorConfig config);
 
     void run() override;
-    void run2();
 
 signals:
     void updated();
