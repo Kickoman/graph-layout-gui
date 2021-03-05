@@ -24,6 +24,8 @@ QVariant GraphLineProxyModel::data(const QModelIndex &index, int role) const
             case Roles::StartYPosition:  return parentModel->getNodeYPosition(edge.first);
             case Roles::FinishXPosition: return parentModel->getNodeXPosition(edge.second);
             case Roles::FinishYPosition: return parentModel->getNodeYPosition(edge.second);
+            case Roles::StartNodeIndex:  return edge.first;
+            case Roles::FinishNodeIndex: return edge.second;
         }
     }
     return QVariant();
@@ -36,6 +38,8 @@ QHash<int, QByteArray> GraphLineProxyModel::roleNames() const
     roles.insert(static_cast<int>(Roles::StartYPosition), "startY");
     roles.insert(static_cast<int>(Roles::FinishXPosition), "finishX");
     roles.insert(static_cast<int>(Roles::FinishYPosition), "finishY");
+    roles.insert(static_cast<int>(Roles::StartNodeIndex), "startNodeIndex");
+    roles.insert(static_cast<int>(Roles::FinishNodeIndex), "finishNodeIndex");
     return roles;
 }
 
@@ -62,6 +66,7 @@ void GraphLineProxyModel::onPositionUpdated(int index)
                          QVector<int>() << static_cast<int>(Roles::StartXPosition)
                                         << static_cast<int>(Roles::StartYPosition)
                                         << static_cast<int>(Roles::FinishXPosition)
-                                        << static_cast<int>(Roles::FinishYPosition));
+                                        << static_cast<int>(Roles::FinishYPosition)
+                         );
     }
 }

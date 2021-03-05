@@ -12,7 +12,9 @@ public:
         StartXPosition = Qt::UserRole + 1,
         StartYPosition,
         FinishXPosition,
-        FinishYPosition
+        FinishYPosition,
+        StartNodeIndex,
+        FinishNodeIndex
     };
 
     GraphLineProxyModel(GraphLayout *parentModel);
