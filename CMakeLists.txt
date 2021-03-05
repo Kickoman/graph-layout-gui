@@ -20,10 +20,8 @@ if (ANDROID)
     add_library(flickable-qml SHARED
       main.cpp
       igraph.h
-      graphengine.cpp
-      graphengine.h
-      graphmodel.cpp
-      graphmodel.h
+      graphlayout.cpp
+      graphlayout.h
       graphnodesproxymodel.cpp
       graphnodesproxymodel.h
       graphlineproxymodel.cpp
@@ -44,10 +42,8 @@ else()
     add_executable(flickable-qml
       main.cpp
       igraph.h
-      graphengine.cpp
-      graphengine.h
-      graphmodel.cpp
-      graphmodel.h
+      graphlayout.cpp
+      graphlayout.h
       graphnodesproxymodel.cpp
       graphnodesproxymodel.h
       graphlineproxymodel.cpp

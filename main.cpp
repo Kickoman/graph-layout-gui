@@ -8,7 +8,7 @@
 #include <QInputDialog>
 
 #include "randomgraphexample.h"
-#include "graphmodel.h"
+#include "graphlayout.h"
 
 int main(int argc, char *argv[])
 {

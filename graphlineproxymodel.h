@@ -2,7 +2,7 @@
 #define GRAPHLINEPROXYMODEL_H
 
 #include <QAbstractListModel>
-#include "graphmodel.h"
+#include "graphlayout.h"
 
 class GraphLineProxyModel : public QAbstractListModel
 {

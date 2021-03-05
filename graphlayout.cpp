@@ -1,4 +1,4 @@
-#include "graphmodel.h"
+#include "graphlayout.h"
 #include "graphnodesproxymodel.h"
 #include "graphlineproxymodel.h"
 #include <QThreadPool>
