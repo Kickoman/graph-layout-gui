@@ -56,14 +56,14 @@ Item {
         enabled: !parent.isDragged
         SmoothedAnimation {
             id: xAnimation
-            velocity: 200
+            velocity: 100
         }
     }
     Behavior on y {
         enabled: !parent.isDragged
         SmoothedAnimation {
             id: yAnimation
-            velocity: 200
+            velocity: 100
         }
     }
 }

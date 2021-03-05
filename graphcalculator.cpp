@@ -8,6 +8,8 @@
 #include <chrono>
 
 #include "twodvector.h"
+#include "section.h"
+#include "line.h"
 
 GraphCalculator::GraphCalculator(IGraph *graph,
                                  QVector<QPointF> &positions,
@@ -79,7 +81,54 @@ void GraphCalculator::run()
             forces[currentEdge.second] += forceVector2;
         }
 
-        // Compute repulsive forces from frame edges
+        // Compute repulsive forces from edges
+        auto nearestPoint = [](GraphGeometry::Section section, QPointF point) -> QPointF {
+            GraphGeometry::TwoDVector direction(section.start(), section.end());
+            direction = direction.rotateDeg(90);
+            GraphGeometry::Line perpendicular(point, direction);
+            GraphGeometry::Line mainLIne(section.start(), section.end());
+
+            bool intersects = false;
+            auto intersection = perpendicular.intersection(mainLIne, &intersects);
+
+            if (!intersects)
+                return point;
+
+            if (section.has(intersection))
+                return intersection;
+
+            GraphGeometry::TwoDVector checkStart(point, section.start());
+            GraphGeometry::TwoDVector checkEnd(point, section.end());
+
+            if (checkStart.magnitude() < checkEnd.magnitude())
+                return section.start();
+            return section.end();
+        };
+
+        for (int targetNode = 0; targetNode < NODES_COUNT; ++targetNode)
+        {
+            auto nodePosition = positions.at(targetNode);
+            for (int targetEdge = 0; targetEdge < EDGES_COUNT; ++targetEdge)
+            {
+                auto edge = graph->edge(targetEdge);
+                if (targetNode == edge.first || targetNode == edge.second) continue;
+
+                auto sectionStart = positions.at(edge.first);
+                auto sectionEnd = positions.at(edge.second);
+                GraphGeometry::Section section(sectionStart, sectionEnd);
+                auto point = nearestPoint(section, nodePosition);
+
+                GraphGeometry::TwoDVector forceDirectionVector(point, nodePosition);
+                auto distance = forceDirectionVector.magnitude();
+                forceDirectionVector = forceDirectionVector / forceDirectionVector.magnitude();
+
+                auto forceScalar = config.repulsiveForce(distance) / 10;
+                auto forceVector = forceDirectionVector * forceScalar;
+                forces[targetNode] += forceVector;
+            }
+        }
+
+        // Compute repulsive forces from frame edges`
         auto computeForce
             = [this](double distance, GraphGeometry::TwoDVector direction) -> GraphGeometry::TwoDVector {
             auto forceScalar = config.repulsiveForce(distance) / 7;
@@ -113,8 +162,8 @@ void GraphCalculator::run()
 
         lock.unlock();
         emit updated();
-        temperature /= 1.05;
-//        QThread::currentThread()->usleep(50000);
+        temperature /= 1.01;
+        QThread::currentThread()->usleep(50000);
     }
     emit finished();
 }

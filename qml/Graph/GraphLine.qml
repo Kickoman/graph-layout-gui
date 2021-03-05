@@ -53,4 +53,28 @@ Shape {
         }
     }
 
+//    Behavior on startX {
+//        SmoothedAnimation {
+//            id: startXAnimation
+//            velocity: 100
+//        }
+//    }
+//    Behavior on startY {
+//        SmoothedAnimation {
+//            id: startYAnimation
+//            velocity: 100
+//        }
+//    }
+//    Behavior on finishX {
+//        SmoothedAnimation {
+//            id: finishXAnimation
+//            velocity: 100
+//        }
+//    }
+//    Behavior on finishY {
+//        SmoothedAnimation {
+//            id: finishYAnimation
+//            velocity: 100
+//        }
+//    }
 }

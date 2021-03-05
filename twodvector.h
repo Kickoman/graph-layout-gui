@@ -19,7 +19,7 @@ public:
     double x() const;
     double y() const;
     TwoDVector &operator+=(GraphGeometry::TwoDVector other);
-    TwoDVector operator+(GraphGeometry::TwoDVector other);
+    TwoDVector operator+(GraphGeometry::TwoDVector other) const;
     double dotProduct(GraphGeometry::TwoDVector other) const;
     double magnitude() const;
     TwoDVector rotateDeg(double degrees) const;

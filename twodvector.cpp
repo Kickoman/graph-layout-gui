@@ -2,7 +2,7 @@
 
 namespace GraphGeometry {
 
-TwoDVector::TwoDVector() : _x(0), _y(0) {}
+TwoDVector::TwoDVector() = default;
 TwoDVector::TwoDVector(double x, double y) : _x(x), _y(y) {}
 TwoDVector::TwoDVector(QPointF from, QPointF to)
     : _x(to.x() - from.x()), _y(to.y() - from.y()) {}
@@ -16,7 +16,7 @@ TwoDVector &TwoDVector::operator+=(GraphGeometry::TwoDVector other)
     _y += other._y;
     return *this;
 }
-TwoDVector TwoDVector::operator+(GraphGeometry::TwoDVector other)
+TwoDVector TwoDVector::operator+(GraphGeometry::TwoDVector other) const
 {
     TwoDVector v;
     v._x = this->_x + other._x;
@@ -43,21 +43,21 @@ TwoDVector TwoDVector::rotateRad(double radians) const
 {
     double x2 = cos(radians) * _x - sin(radians) * _y;
     double y2 = sin(radians) * _x + cos(radians) * _y;
-    return TwoDVector(x2, y2);
+    return {x2, y2};
 }
 
 TwoDVector TwoDVector::multiply(double number) const
 {
     double x2 = _x * number;
     double y2 = _y * number;
-    return TwoDVector(x2, y2);
+    return {x2, y2};
 }
 
 TwoDVector TwoDVector::divide(double number) const
 {
     double x2 = _x / number;
     double y2 = _y / number;
-    return TwoDVector(x2, y2);
+    return {x2, y2};
 }
 
 TwoDVector operator*(GraphGeometry::TwoDVector v, double number)
