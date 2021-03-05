@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQml.Models 2.12
 
 // Main Field
 Rectangle {
@@ -6,9 +7,23 @@ Rectangle {
     color: "gray"
     anchors.fill: parent
 
-    property alias nodeDelegate: repeater.delegate
+    property alias nodeDelegate: nodesRepeater.delegate
     property alias edgeDelegate: linesRepeater.delegate
     property var model: null
+
+    function getNodeX(index) {
+        let item = nodesRepeater.itemAt(index);
+        if (item === null)
+            return 0;
+        return item.x + item.width / 2;
+    }
+
+    function getNodeY(index) {
+        let item = nodesRepeater.itemAt(index);
+        if (item === null)
+            return 0;
+        return item.y + item.height / 2;
+    }
 
     Grid {
         id: mainGrid
@@ -45,25 +60,30 @@ Rectangle {
     }
 
     Repeater {
-        id: repeater
+        id: nodesRepeater
         model: root.model.getNodesModel()
     }
 
     Repeater {
         id: linesRepeater
-        model: root.model.getEdgesModel()
+        model: null
         delegate: GraphLine {
             z: parent.z + 1
-            startX: model.startX
-            startY: model.startY
-            finishX: model.finishX
-            finishY: model.finishY
+            startX: getNodeX(model.startNodeIndex)
+            startY: getNodeY(model.startNodeIndex)
+            finishX: getNodeX(model.finishNodeIndex)
+            finishY: getNodeY(model.finishNodeIndex)
         }
     }
 
     Component.onCompleted: {
-        graphModel.setNodeSize(75, 75)
+        graphModel.setNodeSize(nodesRepeater.delegate.width,
+                               nodesRepeater.delegate.height)
         graphModel.setFrameSize(root.width, root.height)
+        // The model for lines should be set after the
+        // nodes repeater was initialized, because
+        // it uses the positions of the nodesRepeater children.
+        linesRepeater.model = root.model.getEdgesModel()
     }
 
     onHeightChanged: graphModel.setFrameSize(root.width, root.height)
