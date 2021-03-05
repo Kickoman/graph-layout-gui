@@ -48,6 +48,8 @@ void GraphCalculator::run()
                 // move target node onto a larger distance from other node.
                 auto directionVector = GraphGeometry::TwoDVector(itPosition, myPosition);
                 auto distance = directionVector.magnitude();
+                if (qFuzzyCompare(distance, 0))
+                    distance = static_cast<double>(INT_MAX);
                 auto forceScalar = config.repulsiveForce(distance);
                 if (qIsNaN(forceScalar) || qIsInf(forceScalar))
                     forceScalar = static_cast<double>(INT_MAX); // some big value
@@ -68,14 +70,24 @@ void GraphCalculator::run()
             auto directionVector2 = GraphGeometry::TwoDVector(position2, position1);
             auto distance = directionVector1.magnitude();
 
-            assert(qFuzzyCompare(distance, directionVector2.magnitude()));
+            if (qFuzzyCompare(distance, 0))
+            {
+                distance = static_cast<double>(INT_MAX);
+                directionVector1 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
+                directionVector2 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
+            }
+            else
+            {
+                directionVector1 = directionVector1 / distance;
+                directionVector2 = directionVector2 / distance;
+            }
 
             auto forceScalar = config.attractiveForce(distance);
             if (qIsNaN(forceScalar) || qIsInf(forceScalar))
                 forceScalar = static_cast<double>(INT_MAX);
 
-            auto forceVector1 = directionVector1 / distance * forceScalar;
-            auto forceVector2 = directionVector2 / distance * forceScalar;
+            auto forceVector1 = directionVector1 * forceScalar;
+            auto forceVector2 = directionVector2 * forceScalar;
 
             forces[currentEdge.first] += forceVector1;
             forces[currentEdge.second] += forceVector2;
@@ -120,9 +132,17 @@ void GraphCalculator::run()
 
                 GraphGeometry::TwoDVector forceDirectionVector(point, nodePosition);
                 auto distance = forceDirectionVector.magnitude();
-                forceDirectionVector = forceDirectionVector / forceDirectionVector.magnitude();
+                if (qFuzzyCompare(distance, 0))
+                {
+                    distance = static_cast<double>(INT_MAX);
+                    forceDirectionVector = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
+                }
+                else
+                    forceDirectionVector = forceDirectionVector / forceDirectionVector.magnitude();
 
                 auto forceScalar = config.repulsiveForce(distance) / 10;
+                if (qIsNaN(forceScalar) || qIsInf(forceScalar))
+                    forceScalar = static_cast<double>(INT_MAX);
                 auto forceVector = forceDirectionVector * forceScalar;
                 forces[targetNode] += forceVector;
             }
@@ -131,7 +151,11 @@ void GraphCalculator::run()
         // Compute repulsive forces from frame edges`
         auto computeForce
             = [this](double distance, GraphGeometry::TwoDVector direction) -> GraphGeometry::TwoDVector {
+            if (qFuzzyCompare(distance, 0))
+                distance = static_cast<double>(INT_MAX);
             auto forceScalar = config.repulsiveForce(distance) / 7;
+            if (qIsNaN(forceScalar) || qIsInf(forceScalar))
+                forceScalar = static_cast<double>(INT_MAX);
             return direction / direction.magnitude() * forceScalar;
         };
         for (int targetNode = 0; targetNode < NODES_COUNT; ++targetNode)
