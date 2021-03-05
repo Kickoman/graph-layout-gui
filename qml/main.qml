@@ -62,6 +62,16 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
         }
+
+        Slider {
+            visible: controlsScroll.visible
+            id: zoomSlider
+            from: 0.1
+            value: field.zoom
+            to: 10
+            stepSize: 0.1
+            onValueChanged: field.setZoom(value, 0, 0)
+        }
     }
 
     ScrollView {
