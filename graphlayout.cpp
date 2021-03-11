@@ -1,7 +1,7 @@
 #include "graphlayout.h"
 #include "graphnodesproxymodel.h"
 #include "graphlineproxymodel.h"
-#include <QThreadPool>
+//#include <QThreadPool>
 #include <QDebug>
 
 GraphLayout::GraphLayout(IGraph *graph)
@@ -78,12 +78,13 @@ void GraphLayout::setNodeYPosition(int index, double y)
 
 void GraphLayout::recalculatePositions()
 {
-    auto *pool = QThreadPool::globalInstance();
+//    auto *pool = QThreadPool::globalInstance();
     auto *calc = new GraphCalculator(graph, positions, positionsLock, config);
-    calc->setAutoDelete(true);
     connect(calc, &GraphCalculator::finished, this, &GraphLayout::positionsUpdated);
     connect(calc, &GraphCalculator::updated, this, &GraphLayout::positionsUpdated);
-    pool->start(calc);
+    QMetaObject::invokeMethod(calc, "run", Qt::QueuedConnection);
+    calc->setAutoDelete(true);
+//    pool->start(calc);
 }
 
 void GraphLayout::setRandomPositions()

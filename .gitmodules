@@ -2,3 +2,6 @@
 	path = kmisc
 	url = https://git.karasique.xyz/K-Dev/KMisc.git
 	branch = dev-lib-cmake
+[submodule "CMake"]
+	path = CMake
+	url = https://github.com/QuasarApp/CMake

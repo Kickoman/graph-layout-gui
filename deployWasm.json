@@ -1,0 +1,14 @@
+{
+    "bin": [
+        "./build/flickable-qml",
+        "./build/Release/Site.js",
+        "./Wrapper/quasarapplogo.png",
+        "./Wrapper/qtloader.js",
+        "./Wrapper/index.html"
+    ],
+    "zip": true,
+    "binOut": "/",
+    "clear": true,
+    "libOut": "/",
+    "targetDir": "./../Distro"
+}

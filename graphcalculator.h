@@ -31,6 +31,7 @@ public:
                     QMutex &lock,
                     GraphCalculatorConfig config);
 
+    Q_INVOKABLE
     void run() override;
 
 signals:
