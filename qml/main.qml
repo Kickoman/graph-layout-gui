@@ -1,126 +1,81 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.15
-import "Graph"
-import QtQuick.Shapes 1.12
+import QtQuick 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 Rectangle {
-    id: root
-    width: 1200
-    height: 600
+    id: mainApplication
 
-    Header {
-        id: header
-        height: 50
-        z: 10
-        anchors {
-            top: parent.top
-            right: parent.right
-            left: parent.left
-        }
+    width: 1000
+    height: 500
 
-        border.width: 0
-        color: "#276678"
-        title: "QmlApplication"
+    property bool showLoading: false
+
+    Text {
+        anchors.centerIn: parent
+        text: "loading..."
+        visible: showLoading && !graphModel.graphLayout
     }
 
-    Rectangle {
-        id: workplace
-        color: "#d3e0ea"
+    GroupBox {
+        id: generatorGroupBox
+        title: "Generator settings"
+        visible: !graphModel.graphLayout && !showLoading
+        anchors.centerIn: parent
 
-        anchors {
-            top: header.bottom
-            right: controlsScroll.left
-            left: parent.left
-            bottom: parent.bottom
-        }
+        width: 500
 
-        ZoomableField {
-            id: field
-            canvasBackgroundColor: "#f6f5f5"
-
+        GridLayout {
             anchors.fill: parent
+            anchors.margins: 10
+            columns: 2
+            rowSpacing: 10
+            columnSpacing: 10
 
-            GraphView {
-                model: graphModel
-                nodeDelegate: RoundGraphNode { }
+            Text {
+                id: nodesCountLabel
+                text: "Nodes count"
             }
 
-            onDoubleClicked: controlsScroll.toggleVisibility()
-        }
+            TextField {
+                Layout.fillWidth: true
+                width: 50
+                id: nodesCountInput
+                validator: IntValidator {bottom: 1; top: 150;}
+            }
 
-        Text {
-            id: debugText
-            text: "Actual canvas size: " + field.width + "x" + field.height +
-                  "\nZoom: " + field.zoom +
-                  "\nFlickable size: " + field.width + "x" + field.height +
-                  "\nPosition: " + field.contentX + ", " + field.contentY +
-                  "\nContent size:" + field.contentWidth + "x" + field.contentHeight
+            Text {
+                id: edgesCountLabel
+                text: "Edges count"
+            }
 
-            width: 300
-            height: 100
-            z: 10
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-        }
+            TextField {
+                Layout.fillWidth: true
+                width: 50
+                id: edgesCountInput
+                validator: IntValidator {bottom: 0; top: 75*149;}
+            }
 
-        Slider {
-            visible: controlsScroll.visible
-            id: zoomSlider
-            from: 0.1
-            value: field.zoom
-            to: 10
-            stepSize: 0.1
-            onValueChanged: field.setZoom(value, 0, 0)
+            Button {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                text: "Generate!"
+                onClicked: {
+                    if (nodesCountInput.acceptableInput
+                            && edgesCountInput.acceptableInput) {
+                        showLoading = true
+                        graphModel.generateGraph(nodesCountInput.text,
+                                                 edgesCountInput.text)
+                    } else {
+                        console.log("No!");
+                    }
+                }
+            }
         }
     }
 
-    ScrollView {
-        id: controlsScroll
-
-        width: 300
-        clip: true
-
-        function toggleVisibility() {
-            if (visible) {
-                width = 0
-                visible = false
-            } else {
-                width = 300
-                visible = true
-            }
-        }
-
-        anchors {
-            top: header.bottom
-            right: parent.right
-            bottom: parent.bottom
-        }
-
-        contentWidth: 300
-        contentHeight: controls.height
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-        ToolbarControls {
-            id: controls
-
-            z: 10
-
-            backgroundColor: "#1687a7"
-            border.width: 0
-
-            anchors.fill: parent
-            height: 1000
-
-
-            onGraphRearrangeRequested: {
-                graphModel.setRepulsiveForce(controls.repulsiveFormula)
-                graphModel.setAttractiveForce(controls.attractiveFormula)
-                graphModel.setFrameSize(field.canvasWidth, field.canvasHeight)
-                graphModel.recalculatePositions()
-            }
-
-            onGraphRandomizeRequested: {
-                graphModel.setRandomPositions()
-            }
-        }
+    GraphField {
+        anchors.fill: parent
+        visible: graphModel.graphLayout
+        graphLayout: graphModel.graphLayout
     }
 }
