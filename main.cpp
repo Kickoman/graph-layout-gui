@@ -9,6 +9,7 @@
 
 #include "randomgraphexample.h"
 #include "graphlayout.h"
+#include "starter.h"
 
 int main(int argc, char *argv[])
 {
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
 
     unsigned seed = parser.value(seedOption).toUInt();
 
+#ifndef WASM_BUILD
     int nodes = QInputDialog::getInt(nullptr, "Nodes", "Nodes", 5, 0, 1000);
     int edges = QInputDialog::getInt(nullptr, "Edges", "Edges", 5, 0, 1000);
 
@@ -52,5 +54,9 @@ int main(int argc, char *argv[])
     }
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.show();
+#else
+    Starter s(seed);
+    s.start();
+#endif
     return a.exec();
 }

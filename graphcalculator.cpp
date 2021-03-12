@@ -185,9 +185,11 @@ void GraphCalculator::run()
         }
 
         lock.unlock();
+        temperature /= 1.07;
+#ifndef WASM_BUILD
         emit updated();
-        temperature /= 1.01;
         QThread::currentThread()->usleep(50000);
+#endif // WASM_BUILD
     }
     emit finished();
 }

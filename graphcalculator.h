@@ -7,7 +7,7 @@
 #include <QVector>
 #include <QPointF>
 #include "igraph.h"
-#include "kfunction.h"
+#include "kmisc/kfunction/kfunction.h"
 
 struct GraphCalculatorConfig
 {

@@ -1,7 +1,9 @@
 #include "graphlayout.h"
 #include "graphnodesproxymodel.h"
 #include "graphlineproxymodel.h"
-//#include <QThreadPool>
+#ifndef DISABLE_THREADS
+#include <QThreadPool>
+#endif // DISABLE_THREADS
 #include <QDebug>
 
 GraphLayout::GraphLayout(IGraph *graph)
@@ -77,14 +79,18 @@ void GraphLayout::setNodeYPosition(int index, double y)
 }
 
 void GraphLayout::recalculatePositions()
-{
-//    auto *pool = QThreadPool::globalInstance();
+{ 
     auto *calc = new GraphCalculator(graph, positions, positionsLock, config);
+#ifndef DISABLE_THREADS
     connect(calc, &GraphCalculator::finished, this, &GraphLayout::positionsUpdated);
-    connect(calc, &GraphCalculator::updated, this, &GraphLayout::positionsUpdated);
-    QMetaObject::invokeMethod(calc, "run", Qt::QueuedConnection);
+    connect(calc, &GraphCalculator::updated,  this, &GraphLayout::positionsUpdated);
     calc->setAutoDelete(true);
-//    pool->start(calc);
+    QThreadPool::globalInstance()->start(calc);
+#else
+    calc->run();
+    delete calc;
+    emit positionsUpdated();
+#endif // DISABLE_THREADS
 }
 
 void GraphLayout::setRandomPositions()
