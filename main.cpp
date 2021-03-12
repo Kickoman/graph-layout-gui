@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     view.rootContext()->setContextProperty("graphModel", program);
     view.setSource(QUrl("qrc:/qml/main.qml"));
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
-    view.show();
+    view.showMaximized();
 
 //    QTimer::singleShot(2000, program, [program]{
 //        program->generateGraph(5, 20);

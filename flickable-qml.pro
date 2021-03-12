@@ -9,6 +9,7 @@ RESOURCES += \
 
 HEADERS += \
     graphcalculator.h \
+    graphlab.h \
     graphlayout.h \
     graphlineproxymodel.h \
     graphnodesproxymodel.h \
@@ -23,6 +24,7 @@ HEADERS += \
 
 SOURCES += \
     graphcalculator.cpp \
+    graphlab.cpp \
     graphlayout.cpp \
     graphlineproxymodel.cpp \
     graphnodesproxymodel.cpp \
