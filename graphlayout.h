@@ -12,6 +12,11 @@
 class GraphLayout : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(QString attractiveForce WRITE setAttractiveForce)
+    Q_PROPERTY(QString repulsiveForce WRITE setRepulsiveForce)
+    Q_PROPERTY(QVariant nodesModel READ getNodesModel NOTIFY modelUpdated)
+    Q_PROPERTY(QVariant edgesModel READ getEdgesModel NOTIFY modelUpdated)
 public:
     GraphLayout(IGraph *graph);
 

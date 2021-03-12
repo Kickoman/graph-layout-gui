@@ -61,12 +61,12 @@ Rectangle {
 
     Repeater {
         id: nodesRepeater
-        model: root.model.getNodesModel()
+        model: root.model.nodesModel
     }
 
     Repeater {
         id: linesRepeater
-        model: null
+        model: root.model.edgesModel
         delegate: GraphLine {
             z: parent.z + 1
             startX: getNodeX(model.startNodeIndex)
@@ -76,15 +76,15 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: {
-        graphModel.setNodeSize(75, 75)  // TODO: fix
-        graphModel.setFrameSize(root.width, root.height)
+    onModelChanged: {
+        model.setNodeSize(75, 75)  // TODO: fix
+        model.setFrameSize(root.width, root.height)
         // The model for lines should be set after the
         // nodes repeater was initialized, because
         // it uses the positions of the nodesRepeater children.
-        linesRepeater.model = root.model.getEdgesModel()
+        linesRepeater.model = root.model.edgesModel
     }
 
-    onHeightChanged: graphModel.setFrameSize(root.width, root.height)
-    onWidthChanged: graphModel.setFrameSize(root.width, root.height)
+    onHeightChanged: model.setFrameSize(root.width, root.height)
+    onWidthChanged: model.setFrameSize(root.width, root.height)
 }

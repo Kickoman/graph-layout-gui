@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/main.qml</file>
+        <file>qml/GraphField.qml</file>
         <file>qml/Header.qml</file>
         <file>qml/ToolbarControls.qml</file>
         <file>qml/ZoomableField.qml</file>
@@ -8,5 +8,6 @@
         <file>qml/Graph/GraphLine.qml</file>
         <file>qml/Graph/GraphNode.qml</file>
         <file>qml/RoundGraphNode.qml</file>
+        <file>qml/main.qml</file>
     </qresource>
 </RCC>

@@ -71,3 +71,5 @@ obj/
 # End of https://www.toptal.com/developers/gitignore/api/c++,codeblocks,cmake
 
 build/
+build*/
+*.pro.user

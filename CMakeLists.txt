@@ -19,6 +19,8 @@ add_subdirectory(kmisc)
 if (ANDROID)
     add_library(flickable-qml SHARED
       main.cpp
+      graphlab.h
+      graphlab.cpp
       igraph.h
       graphlayout.cpp
       graphlayout.h
@@ -42,6 +44,8 @@ else()
     add_executable(flickable-qml
       main.cpp
       igraph.h
+      graphlab.h
+      graphlab.cpp
       graphlayout.cpp
       graphlayout.h
       graphnodesproxymodel.cpp
