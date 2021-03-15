@@ -7,6 +7,7 @@
 #include <QCommandLineOption>
 #include <QInputDialog>
 #include <QTimer>
+#include <ctime>
 
 #include "randomgraphexample.h"
 #include "graphlayout.h"
@@ -23,13 +24,29 @@ int main(int argc, char *argv[])
 
     QCommandLineParser parser;
     QCommandLineOption seedOption(QStringList() << "s" << "seed", "Specify seed", "seed", "0");
+    QCommandLineOption graphOption(QStringList() << "f" << "file", "Set graph description", "graph");
     parser.addOption(seedOption);
+    parser.addOption(graphOption);
     parser.process(a);
 
     unsigned seed = parser.value(seedOption).toUInt();
     srand(seed > 0 ? seed : unsigned(time(nullptr)));
 
+    QString graphDescription;
+    if (parser.isSet(graphOption))
+    {
+        QFile file(parser.value(graphOption));
+        if (file.open(QIODevice::ReadOnly))
+        {
+            graphDescription = file.readAll();
+        }
+    }
+
     auto *program = new GraphLab();
+
+    if (!graphDescription.isEmpty())
+        program->setGraph(graphDescription);
+
     QQuickView view;
     view.rootContext()->setContextProperty("graphModel", program);
     view.setSource(QUrl("qrc:/qml/main.qml"));

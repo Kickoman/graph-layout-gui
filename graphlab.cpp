@@ -1,6 +1,6 @@
 #include "graphlab.h"
 #include "randomgraphexample.h"
-
+#include "basicgraphparser.h"
 #include <QTimer>
 
 GraphLab::GraphLab(QObject *parent) : QObject(parent)
@@ -18,7 +18,15 @@ void GraphLab::generateGraph(int nodes, int edges)
 
 void GraphLab::setGraph(const QString &graphDescription)
 {
-    Q_UNUSED(graphDescription)
+    IGraph* temp = graph;
+    BasicGraphParser::parseGraph(graphDescription, &graph);
+
+    if (graphLayout == nullptr)
+        graphLayout = new GraphLayout(graph);
+    else
+        graphLayout->setGraph(graph);
+
+    delete temp;
 }
 
 GraphLayout *GraphLab::getGraphLayout() const

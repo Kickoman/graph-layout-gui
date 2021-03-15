@@ -151,6 +151,12 @@ QVariant GraphLayout::getEdgesModel()
     return QVariant::fromValue(edgesModel);
 }
 
+void GraphLayout::setGraph(IGraph *graph)
+{
+    this->graph = graph;
+    emit modelUpdated();
+}
+
 void GraphLayout::onGraphChanged()
 {
     setRandomPositions();

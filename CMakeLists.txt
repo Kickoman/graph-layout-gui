@@ -20,8 +20,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     message(STATUS "GCC detected, adding compile flags")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
 endif(CMAKE_COMPILER_IS_GNUCXX)
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-set(CMAKE_CXX_FLAGS_DEBUG   "-g")
+#set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+#set(CMAKE_CXX_FLAGS_DEBUG   "-g")
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
@@ -50,6 +50,10 @@ if (ANDROID)
       line.h
       section.h
       section.cpp
+      basicgraphparser.h
+      basicgraphparser.cpp
+      basicgraph.h
+      basicgraph.cpp
       qml.qrc
     )
 else()
@@ -74,6 +78,10 @@ else()
       line.h
       section.h
       section.cpp
+      basicgraphparser.h
+      basicgraphparser.cpp
+      basicgraph.h
+      basicgraph.cpp
       qml.qrc
     )
 endif()

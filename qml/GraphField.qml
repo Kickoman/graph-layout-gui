@@ -45,7 +45,8 @@ Rectangle {
             GraphView {
                 id: graphView
                 model: graphLayout
-                nodeDelegate: RoundGraphNode { }
+//                nodeDelegate: RoundGraphNode { }
+                nodeDelegate: RectangeGraphNode { }
             }
 
             onDoubleClicked: controlsScroll.toggleVisibility()

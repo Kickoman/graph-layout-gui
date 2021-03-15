@@ -77,6 +77,8 @@ public:
 
     Q_INVOKABLE
     QVariant getEdgesModel();
+
+    void setGraph(IGraph *graph);
 signals:
     void positionsUpdated();
     void positionUpdated(int nodeIndex);

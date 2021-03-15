@@ -28,14 +28,14 @@ Rectangle {
 
     function getNodeWidth() {
         let width = 0;
-        if (nodesRepeater.children.length > 0)
+        if (nodesRepeater.count > 0)
             width = nodesRepeater.itemAt(0).width
         return width
     }
 
     function getNodeHeight() {
         let height = 0;
-        if (nodesRepeater.children.length > 0)
+        if (nodesRepeater.count > 0)
             height = nodesRepeater.itemAt(0).height
         return height
     }
