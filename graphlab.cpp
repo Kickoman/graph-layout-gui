@@ -14,9 +14,6 @@ void GraphLab::generateGraph(int nodes, int edges)
     graphLayout = new GraphLayout(graph);
     graphLayout->setRandomPositions();
     emit layoutReady();
-//    emit graphLayout->modelUpdated();
-
-//    QTimer::singleShot(500, graphLayout, [this]{graphLayout->setRandomPositions();});
 }
 
 void GraphLab::setGraph(const QString &graphDescription)

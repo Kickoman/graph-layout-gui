@@ -26,36 +26,8 @@ int main(int argc, char *argv[])
     parser.addOption(seedOption);
     parser.process(a);
 
-//    unsigned seed = parser.value(seedOption).toUInt();
-
-//    int nodes = QInputDialog::getInt(nullptr, "Nodes", "Nodes", 5, 0, 1000);
-//    int edges = QInputDialog::getInt(nullptr, "Edges", "Edges", 5, 0, 1000);
-
-//    qDebug() << "Generating base graph";
-//    auto graph = new RandomGraphExample(nodes, edges, seed);
-//    qDebug() << "Graph info. Nodes:" << graph->nodesCount() << "; edges:" << graph->edgesCount();
-//    qDebug() << "Creating a model";
-//    auto model = new GraphLayout(graph);
-//    model->setRandomPositions();
-
-//    qDebug() << "Creating view...";
-//    QQuickView view;
-//    qDebug() << "Inserting a model into the view...";
-//    view.rootContext()->setContextProperty("graphModel", model);
-//    view.setSource(QUrl("qrc:/qml/main.qml"));
-//    if (view.status() == QQuickView::Status::Error)
-//    {
-//        auto errors = view.errors();
-//        QString errorsString;
-//        for (const auto &error : qAsConst(errors))
-//            errorsString.append(QString("%1\n").arg(error.toString()));
-//        QMessageBox::critical(nullptr,
-//                              "Critical error",
-//                              "Can't start view. Errors:\n" + errorsString);
-//        return -1;
-//    }
-//    view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
-//    view.show();
+    unsigned seed = parser.value(seedOption).toUInt();
+    srand(seed > 0 ? seed : unsigned(time(nullptr)));
 
     auto *program = new GraphLab();
     QQuickView view;
@@ -63,10 +35,6 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/qml/main.qml"));
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.showMaximized();
-
-//    QTimer::singleShot(2000, program, [program]{
-//        program->generateGraph(5, 20);
-//    });
 
     return a.exec();
 }
