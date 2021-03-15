@@ -1,7 +1,7 @@
 #ifndef TWODVECTOR_H
 #define TWODVECTOR_H
 
-#include <QPointF>
+#include "point.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -38,7 +38,7 @@ public:
     /// \param from Start point
     /// \param to Finish point
     ///
-    TwoDVector(QPointF from, QPointF to);
+    TwoDVector(Point from, Point to);
     ///
     /// \brief Getter for vector's X coordinate
     /// \return x coordinate

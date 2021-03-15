@@ -55,7 +55,7 @@ void GraphLayout::setNodeXPosition(int index, double x)
 {
     if (!qFuzzyCompare(getNodeXPosition(index), x))
     {
-        positions[index] = QPointF(x, getNodeYPosition(index));
+        positions[index] = GraphGeometry::Point(x, getNodeYPosition(index));
         emit positionUpdated(index);
     }
 }
@@ -64,7 +64,7 @@ void GraphLayout::setNodeYPosition(int index, double y)
 {
     if (!qFuzzyCompare(getNodeYPosition(index), y))
     {
-        positions[index] = QPointF(getNodeXPosition(index), y);
+        positions[index] = GraphGeometry::Point(getNodeXPosition(index), y);
         emit positionUpdated(index);
     }
 }
@@ -92,7 +92,7 @@ void GraphLayout::setRandomPositions()
     {
         double x = rand() % int(area);
         double y = rand() % int(area);
-        pos = QPointF(x, y);
+        pos = GraphGeometry::Point(x, y);
     }
     emit positionsUpdated();
 }

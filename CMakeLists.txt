@@ -27,6 +27,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 
 add_subdirectory(kmisc)
+add_subdirectory(GraphGeometry/)
 
 if (ANDROID)
     add_library(flickable-qml SHARED
@@ -44,12 +45,12 @@ if (ANDROID)
       graphcalculator.h
       randomgraphexample.cpp
       randomgraphexample.h
-      twodvector.cpp
-      twodvector.h
-      line.cpp
-      line.h
-      section.h
-      section.cpp
+#      twodvector.cpp
+#      twodvector.h
+#      line.cpp
+#      line.h
+#      section.h
+#      section.cpp
       basicgraphparser.h
       basicgraphparser.cpp
       basicgraph.h
@@ -72,12 +73,12 @@ else()
       graphcalculator.h
       randomgraphexample.cpp
       randomgraphexample.h
-      twodvector.cpp
-      twodvector.h
-      line.cpp
-      line.h
-      section.h
-      section.cpp
+#      twodvector.cpp
+#      twodvector.h
+#      line.cpp
+#      line.h
+#      section.h
+#      section.cpp
       basicgraphparser.h
       basicgraphparser.cpp
       basicgraph.h
@@ -92,6 +93,7 @@ target_link_libraries(flickable-qml
     Qt${QT_VERSION_MAJOR}::Qml
     Qt${QT_VERSION_MAJOR}::QuickWidgets
     kmisc
+    graphgeometry
 )
 
 #initWasmSupport(${PROJECT_NAME} deployWasm.json)

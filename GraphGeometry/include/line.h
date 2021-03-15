@@ -1,7 +1,7 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include <QPointF>
+#include "point.h"
 #include "twodvector.h"
 
 namespace GraphGeometry {
@@ -18,9 +18,9 @@ public:
     /// \brief Slop-intercept form
     Line(double k, double b);
     /// \brief By two points
-    Line(QPointF a, QPointF b);
+    Line(Point a, Point b);
     /// \brief By the point and the direction vector
-    Line(QPointF a, TwoDVector directionVector);
+    Line(Point a, TwoDVector directionVector);
 
     // Standard form line equation
     ///
@@ -58,7 +58,7 @@ public:
     /// \param p point coordinates
     /// \return true if the point belongs to the line, false otherwise
     ///
-    bool has(QPointF p) const;
+    bool has(Point p) const;
 
     ///
     /// \brief Tries to find the intersection point between two lines
@@ -67,7 +67,7 @@ public:
     ///        or as false if the lines are parallel
     /// \return a point of intersection
     ///
-    QPointF intersection(const Line &other, bool *ok = nullptr) const;
+    Point intersection(const Line &other, bool *ok = nullptr) const;
 
 private:
     double _a = 0;

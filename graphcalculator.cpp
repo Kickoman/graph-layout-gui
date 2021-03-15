@@ -23,7 +23,7 @@ const int GraphCalculator::kEdgesRepulsiveDecreasingFactor(7);
 const int GraphCalculator::kLinesRepulsiveDecreasingFactor(10);
 
 GraphCalculator::GraphCalculator(IGraph *graph,
-                                 QVector<QPointF> &positions,
+                                 QVector<GraphGeometry::Point> &positions,
                                  QMutex &lock,
                                  GraphCalculatorConfig config)
     : graph(graph)
@@ -105,7 +105,7 @@ void GraphCalculator::run()
         }
 
         // Compute repulsive forces from edges
-        auto nearestPoint = [](const GraphGeometry::Section &section, QPointF point) -> QPointF {
+        auto nearestPoint = [](const GraphGeometry::Section &section, GraphGeometry::Point point) -> GraphGeometry::Point {
             GraphGeometry::TwoDVector direction(section.start(), section.end());
             direction = direction.rotateDeg(kRightAngleDeg);
             GraphGeometry::Line perpendicular(point, direction);
@@ -192,7 +192,7 @@ void GraphCalculator::run()
             y = std::max(config.nodeHeight / 2, y);
             y = std::min(config.frameHeight - config.nodeHeight / 2, y);
 
-            positions[node] = QPointF(x, y);
+            positions[node] = GraphGeometry::Point(x, y);
         }
 
         lock.unlock();

@@ -1,8 +1,7 @@
 #include "line.h"
 #include "twodvector.h"
 
-#include <cmath>
-#include <cstdlib>
+#include "mathematics.h"
 
 namespace GraphGeometry {
 
@@ -21,30 +20,30 @@ Line::Line(double k, double b)
         _c *= -1;
     }
 }
-Line::Line(QPointF a, QPointF b)
+Line::Line(Point a, Point b)
 {
     _a = b.y() - a.y();
     _b = a.x() - b.x();
     _c = b.x()*a.y()-a.x()*b.y();
 
-    if (!qFuzzyCompare(_b, 0))
+    if (!fuzzyCompare(_b, 0))
     {
-        _a /= qAbs(_b);
-        _c /= qAbs(_b);
-        _b /= qAbs(_b);
+        _a /= abs(_b);
+        _c /= abs(_b);
+        _b /= abs(_b);
     }
 }
 
-Line::Line(QPointF a, TwoDVector directionVector)
+Line::Line(Point a, TwoDVector directionVector)
 {
     _a = directionVector.y();
     _b = -directionVector.x();
     _c = directionVector.x() * a.y() - a.x() * directionVector.y();
-    if (!qFuzzyCompare(_b, 0))
+    if (!fuzzyCompare(_b, 0))
     {
-        _a /= qAbs(_b);
-        _c /= qAbs(_b);
-        _b /= qAbs(_b);
+        _a /= abs(_b);
+        _c /= abs(_b);
+        _b /= abs(_b);
     }
 }
 
@@ -55,15 +54,15 @@ double Line::C() const { return _c; }
 double Line::k() const { return _b < 0 ? _a : -_a; }
 double Line::b() const { return _b < 0 ? _c : -_c; }
 
-bool Line::has(QPointF p) const { return qFuzzyCompare(_a * p.x() + _b * p.y() + _c, 0); }
+bool Line::has(Point p) const { return fuzzyCompare(_a * p.x() + _b * p.y() + _c, 0); }
 
-QPointF Line::intersection(const Line &other, bool *ok) const
+Point Line::intersection(const Line &other, bool *ok) const
 {
     double x = 0;
     double y = 0;
     double det = this->A() * other.B() - other.A() * this->B();
-    if (ok != nullptr) *ok = (!qFuzzyCompare(_b, 0));
-    if (!qFuzzyCompare(_b, 0))
+    if (ok != nullptr) *ok = (!fuzzyCompare(_b, 0));
+    if (!fuzzyCompare(_b, 0))
     {
         x = - (other.B()*this->C() - this->B()*other.C()) / det;
         y = - (this->A()*other.C() - other.A()*this->C()) / det;

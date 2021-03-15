@@ -4,7 +4,7 @@ namespace GraphGeometry {
 
 TwoDVector::TwoDVector() = default;
 TwoDVector::TwoDVector(double x, double y) : _x(x), _y(y) {}
-TwoDVector::TwoDVector(QPointF from, QPointF to)
+TwoDVector::TwoDVector(Point from, Point to)
     : _x(to.x() - from.x()), _y(to.y() - from.y()) {}
 
 double TwoDVector::x() const { return _x; }

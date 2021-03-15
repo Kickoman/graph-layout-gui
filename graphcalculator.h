@@ -5,7 +5,7 @@
 #include <QRunnable>
 #include <QMutex>
 #include <QVector>
-#include <QPointF>
+#include "point.h"
 #include "igraph.h"
 #include "kmisc/kfunction/kfunction.h"
 
@@ -27,7 +27,7 @@ class GraphCalculator : public QObject, public QRunnable
     Q_OBJECT
 public:
     GraphCalculator(IGraph *graph,
-                    QVector<QPointF> &positions,
+                    QVector<GraphGeometry::Point> &positions,
                     QMutex &lock,
                     GraphCalculatorConfig config);
 
@@ -49,7 +49,7 @@ private:
 
     IGraph *graph;
     QMutex &mutex;
-    QVector<QPointF> &positions;
+    QVector<GraphGeometry::Point> &positions;
     GraphCalculatorConfig config;
 };
 
