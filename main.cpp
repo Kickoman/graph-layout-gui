@@ -11,7 +11,6 @@
 
 #include "randomgraphexample.h"
 #include "graphlayout.h"
-#include "starter.h"
 
 #include "graphlab.h"
 

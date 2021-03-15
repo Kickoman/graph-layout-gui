@@ -8,6 +8,8 @@ RESOURCES += \
     qml.qrc
 
 HEADERS += \
+    basicgraph.h \
+    basicgraphparser.h \
     graphcalculator.h \
     graphlab.h \
     graphlayout.h \
@@ -18,11 +20,11 @@ HEADERS += \
     line.h \
     randomgraphexample.h \
     section.h \
-    starter.h \
-    tempinputwidget.h \
     twodvector.h
 
 SOURCES += \
+    basicgraph.cpp \
+    basicgraphparser.cpp \
     graphcalculator.cpp \
     graphlab.cpp \
     graphlayout.cpp \
@@ -32,8 +34,6 @@ SOURCES += \
     main.cpp \
     randomgraphexample.cpp \
     section.cpp \
-    starter.cpp \
-    tempinputwidget.cpp \
     twodvector.cpp
 
 DEFINES += WASM_BUILD
