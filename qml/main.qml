@@ -41,6 +41,7 @@ Rectangle {
             anchors.fill: parent
 
             GraphView {
+                id: graphView
                 model: graphModel
                 nodeDelegate: RoundGraphNode { }
             }
@@ -115,6 +116,7 @@ Rectangle {
                 graphModel.setRepulsiveForce(controls.repulsiveFormula)
                 graphModel.setAttractiveForce(controls.attractiveFormula)
                 graphModel.setFrameSize(field.canvasWidth, field.canvasHeight)
+                graphModel.setNodeSize(graphView.getNodeWidth(), graphView.getNodeHeight())
                 graphModel.recalculatePositions()
             }
 

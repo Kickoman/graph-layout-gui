@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQml.Models 2.12
+import QtQml 2.0
 
 // Main Field
 Rectangle {
@@ -23,6 +24,20 @@ Rectangle {
         if (item === null)
             return 0;
         return item.y + item.height / 2;
+    }
+
+    function getNodeWidth() {
+        let width = 0;
+        if (nodesRepeater.children.length > 0)
+            width = nodesRepeater.itemAt(0).width
+        return width
+    }
+
+    function getNodeHeight() {
+        let height = 0;
+        if (nodesRepeater.children.length > 0)
+            height = nodesRepeater.itemAt(0).height
+        return height
     }
 
     Grid {
@@ -61,7 +76,7 @@ Rectangle {
 
     Repeater {
         id: nodesRepeater
-        model: root.model.getNodesModel()
+        model: root.model.nodesModel
     }
 
     Repeater {
@@ -77,14 +92,13 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        graphModel.setNodeSize(75, 75)  // TODO: fix
-        graphModel.setFrameSize(root.width, root.height)
+        root.model.setFrameSize(root.width, root.height)
         // The model for lines should be set after the
         // nodes repeater was initialized, because
         // it uses the positions of the nodesRepeater children.
-        linesRepeater.model = root.model.getEdgesModel()
+        linesRepeater.model = root.model.edgesModel
     }
 
-    onHeightChanged: graphModel.setFrameSize(root.width, root.height)
-    onWidthChanged: graphModel.setFrameSize(root.width, root.height)
+    onHeightChanged: root.model.setFrameSize(root.width, root.height)
+    onWidthChanged: root.model.setFrameSize(root.width, root.height)
 }

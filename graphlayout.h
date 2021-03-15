@@ -12,6 +12,11 @@
 class GraphLayout : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(int nodesCount READ nodesCount NOTIFY modelUpdated)
+    Q_PROPERTY(int edgesCount READ edgesCount NOTIFY modelUpdated)
+    Q_PROPERTY(QVariant nodesModel READ getNodesModel NOTIFY modelUpdated)
+    Q_PROPERTY(QVariant edgesModel READ getEdgesModel NOTIFY modelUpdated)
 public:
     GraphLayout(IGraph *graph);
 
