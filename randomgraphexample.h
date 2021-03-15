@@ -5,7 +5,10 @@
 
 #include <QVector>
 
-
+///
+/// \brief Generates a random graph with the given number of
+///        nodes and edges
+///
 class RandomGraphExample : public IGraph
 {
 public:

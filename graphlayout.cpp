@@ -34,15 +34,6 @@ QPair<int, int> GraphLayout::edge(int index) const
     return graph->edge(index);
 }
 
-QVariant GraphLayout::edgeQml(int index) const
-{
-    auto e = edge(index);
-    QVariantMap var;
-    var["first"] = e.first;
-    var["second"] = e.second;
-    return var;
-}
-
 QVariant GraphLayout::edgeProperties(int index) const
 {
     return graph->edgeProperties(index);
