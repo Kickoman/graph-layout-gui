@@ -38,6 +38,14 @@ signals:
     void finished();
 
 private:
+    static const double kMinimalTemperature;
+    static const double kTemperatureDecreasingFactor;
+    static const int kDelayUs;
+    static const int kMaxDegrees;
+    static const int kRightAngleDeg;
+    static const int kEdgesRepulsiveDecreasingFactor;
+    static const int kLinesRepulsiveDecreasingFactor;
+
     IGraph *graph;
     QMutex &mutex;
     QVector<QPointF> &positions;

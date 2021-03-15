@@ -59,9 +59,10 @@ bool Line::has(QPointF p) const { return qFuzzyCompare(_a * p.x() + _b * p.y() +
 
 QPointF Line::intersection(const Line &other, bool *ok) const
 {
-    double x = 0, y = 0;
+    double x = 0;
+    double y = 0;
     double det = this->A() * other.B() - other.A() * this->B();
-    if (ok) *ok = (!qFuzzyCompare(_b, 0));
+    if (ok != nullptr) *ok = (!qFuzzyCompare(_b, 0));
     if (!qFuzzyCompare(_b, 0))
     {
         x = - (other.B()*this->C() - this->B()*other.C()) / det;

@@ -6,10 +6,21 @@
 #include <thread>
 #include <QThread>
 #include <chrono>
+#include <utility>
 
 #include "twodvector.h"
 #include "section.h"
 #include "line.h"
+
+Q_DECLARE_TYPEINFO(GraphGeometry::TwoDVector, Q_MOVABLE_TYPE);
+
+const double GraphCalculator::kMinimalTemperature(10);
+const double GraphCalculator::kTemperatureDecreasingFactor(1.01);
+const int GraphCalculator::kDelayUs(50000);
+const int GraphCalculator::kMaxDegrees(360);
+const int GraphCalculator::kRightAngleDeg(90);
+const int GraphCalculator::kEdgesRepulsiveDecreasingFactor(7);
+const int GraphCalculator::kLinesRepulsiveDecreasingFactor(10);
 
 GraphCalculator::GraphCalculator(IGraph *graph,
                                  QVector<QPointF> &positions,
@@ -18,7 +29,7 @@ GraphCalculator::GraphCalculator(IGraph *graph,
     : graph(graph)
     , mutex(lock)
     , positions(positions)
-    , config(config)
+    , config(std::move(config))
 {
 }
 
@@ -27,7 +38,7 @@ void GraphCalculator::run()
     double temperature = sqrt(config.frameHeight * config.frameHeight
                               + config.frameWidth * config.frameWidth);
 
-    while (temperature > 10)
+    while (temperature > kMinimalTemperature)
     {
         QMutexLocker lock(&mutex);
 
@@ -73,8 +84,8 @@ void GraphCalculator::run()
             if (qFuzzyCompare(distance, 0))
             {
                 distance = static_cast<double>(INT_MAX);
-                directionVector1 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
-                directionVector2 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
+                directionVector1 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % kMaxDegrees);
+                directionVector2 = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % kMaxDegrees);
             }
             else
             {
@@ -94,9 +105,9 @@ void GraphCalculator::run()
         }
 
         // Compute repulsive forces from edges
-        auto nearestPoint = [](GraphGeometry::Section section, QPointF point) -> QPointF {
+        auto nearestPoint = [](const GraphGeometry::Section &section, QPointF point) -> QPointF {
             GraphGeometry::TwoDVector direction(section.start(), section.end());
-            direction = direction.rotateDeg(90);
+            direction = direction.rotateDeg(kRightAngleDeg);
             GraphGeometry::Line perpendicular(point, direction);
             GraphGeometry::Line mainLIne(section.start(), section.end());
 
@@ -135,12 +146,12 @@ void GraphCalculator::run()
                 if (qFuzzyCompare(distance, 0))
                 {
                     distance = static_cast<double>(INT_MAX);
-                    forceDirectionVector = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % 360);
+                    forceDirectionVector = GraphGeometry::TwoDVector(1, 0).rotateDeg(rand() % kMaxDegrees);
                 }
                 else
                     forceDirectionVector = forceDirectionVector / forceDirectionVector.magnitude();
 
-                auto forceScalar = config.repulsiveForce(distance) / 10;
+                auto forceScalar = config.repulsiveForce(distance) / kLinesRepulsiveDecreasingFactor;
                 if (qIsNaN(forceScalar) || qIsInf(forceScalar))
                     forceScalar = static_cast<double>(INT_MAX);
                 auto forceVector = forceDirectionVector * forceScalar;
@@ -153,7 +164,7 @@ void GraphCalculator::run()
             = [this](double distance, GraphGeometry::TwoDVector direction) -> GraphGeometry::TwoDVector {
             if (qFuzzyCompare(distance, 0))
                 distance = static_cast<double>(INT_MAX);
-            auto forceScalar = config.repulsiveForce(distance) / 7;
+            auto forceScalar = config.repulsiveForce(distance) / kEdgesRepulsiveDecreasingFactor;
             if (qIsNaN(forceScalar) || qIsInf(forceScalar))
                 forceScalar = static_cast<double>(INT_MAX);
             return direction / direction.magnitude() * forceScalar;
@@ -186,8 +197,8 @@ void GraphCalculator::run()
 
         lock.unlock();
         emit updated();
-        temperature /= 1.01;
-        QThread::currentThread()->usleep(50000);
+        temperature /= kTemperatureDecreasingFactor;
+        QThread::usleep(kDelayUs);
     }
     emit finished();
 }
