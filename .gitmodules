@@ -1,7 +1,7 @@
 [submodule "kmisc"]
 	path = kmisc
-	url = https://git.karasique.xyz/K-Dev/KMisc.git
+	url = git@github.com:Kickoman/kmisc.git
 	branch = dev-lib-cmake
 [submodule "GraphGeometry"]
 	path = GraphGeometry
-	url = https://git.karasique.xyz/kanstancin/GraphGeometry.git
+	url = git@github.com:Kickoman/graph-geometry.git
