@@ -45,13 +45,12 @@ int main(int argc, char *argv[])
         program->setGraph(graphDescription);
 
     QQuickView view;
-    view.engine()->addImportPath("qrc:/graph-layout/GraphLayout");
+
+    // The line below is necessary to load graph-layout module
+    view.engine()->addImportPath("qrc:///");
     view.rootContext()->setContextProperty("graphModel", program);
     view.setSource(QUrl("qrc:/qml/main.qml"));
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.showMaximized();
-
-    qDebug() << view.engine()->importPathList();
-
     return a.exec();
 }

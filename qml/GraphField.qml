@@ -1,7 +1,5 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.15
-//import "../graph-layout/qml/"
-//import "../graph-layout/qml/Graph/"
+import QtQuick.Controls 2.12
 import GraphLayout 1.0
 import QtQuick.Shapes 1.12
 

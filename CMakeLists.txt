@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(flickable-qml LANGUAGES CXX)
+project(GraphLab LANGUAGES CXX)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -15,55 +15,54 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Set default compile flags for GCC
-if(CMAKE_COMPILER_IS_GNUCXX)
-    message(STATUS "GCC detected, adding compile flags")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
-endif(CMAKE_COMPILER_IS_GNUCXX)
-#set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-#set(CMAKE_CXX_FLAGS_DEBUG   "-g")
-
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 
-add_subdirectory(graph-layout/)
+add_subdirectory(lib/graph-layout)
+
+set(HEADERS_DIR "include")
+set(SOURCES_DIR "src")
+
+set(HEADERS
+    ${HEADERS_DIR}/basicgraph.h
+    ${HEADERS_DIR}/basicgraphparser.h
+    ${HEADERS_DIR}/randomgraphexample.h
+    ${HEADERS_DIR}/graphlab.h
+)
+
+set(SOURCES
+    ${SOURCES_DIR}/main.cpp
+    ${SOURCES_DIR}/basicgraph.cpp
+    ${SOURCES_DIR}/basicgraphparser.cpp
+    ${SOURCES_DIR}/graphlab.cpp
+    ${SOURCES_DIR}/randomgraphexample.cpp
+)
+
+set(RESOURCES
+    qml.qrc
+    ${GRAPH_LAYOUT_QML_RESOURCES}
+)
 
 if (ANDROID)
-    add_library(flickable-qml SHARED
-      main.cpp
-      graphlab.h
-      graphlab.cpp
-      randomgraphexample.cpp
-      randomgraphexample.h
-      basicgraphparser.h
-      basicgraphparser.cpp
-      basicgraph.h
-      basicgraph.cpp
-      qml.qrc
-      ${GRAPH_LAYOUT_QML_RESOURCES}
+    add_library(${PROJECT_NAME} SHARED
+        ${HEADERS}
+        ${SOURCES}
+        ${RESOURCES}
     )
 else()
-    add_executable(flickable-qml
-      main.cpp
-      graphlab.h
-      graphlab.cpp
-      randomgraphexample.cpp
-      randomgraphexample.h
-      basicgraphparser.h
-      basicgraphparser.cpp
-      basicgraph.h
-      basicgraph.cpp
-      qml.qrc
-      ${GRAPH_LAYOUT_QML_RESOURCES}
+    add_executable(${PROJECT_NAME}
+        ${HEADERS}
+        ${SOURCES}
+        ${RESOURCES}
     )
 endif()
 
-target_link_libraries(flickable-qml
+target_include_directories(${PROJECT_NAME} PRIVATE ${HEADERS_DIR})
+
+target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Qml
     Qt${QT_VERSION_MAJOR}::QuickWidgets
     graphlayout
 )
-
-#initWasmSupport(${PROJECT_NAME} deployWasm.json)
