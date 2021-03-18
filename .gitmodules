@@ -1,0 +1,3 @@
+[submodule "graph-layout"]
+	path = graph-layout
+	url = git@github.com:Kickoman/graph-layout.git
