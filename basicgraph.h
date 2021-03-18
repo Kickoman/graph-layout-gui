@@ -2,6 +2,7 @@
 #define BASICGRAPH_H
 
 #include "igraph.h"
+#include <QVector>
 
 class BasicGraph : public IGraph
 {
