@@ -3,14 +3,12 @@
 #include <QMessageBox>
 #include <QQmlError>
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QInputDialog>
 #include <QTimer>
 #include <ctime>
-
-#include "randomgraphexample.h"
-#include "graphlayout.h"
 
 #include "graphlab.h"
 
@@ -47,10 +45,13 @@ int main(int argc, char *argv[])
         program->setGraph(graphDescription);
 
     QQuickView view;
+    view.engine()->addImportPath("qrc:/graph-layout/GraphLayout");
     view.rootContext()->setContextProperty("graphModel", program);
     view.setSource(QUrl("qrc:/qml/main.qml"));
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.showMaximized();
+
+    qDebug() << view.engine()->importPathList();
 
     return a.exec();
 }
