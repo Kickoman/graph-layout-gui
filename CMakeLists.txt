@@ -15,6 +15,14 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT LIBRARY_BUILD_TYPE)
+    set(LIBRARY_BUILD_TYPE "SHARED")
+endif()
+
+set(GRAPH_LAYOUT_LIB_TYPE ${LIBRARY_BUILD_TYPE})
+
+message("Graph library should be ${GRAPH_LAYOUT_LIB_TYPE}")
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
 
