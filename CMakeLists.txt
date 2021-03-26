@@ -28,6 +28,7 @@ set(HEADERS
     ${HEADERS_DIR}/basicgraphparser.h
     ${HEADERS_DIR}/randomgraphexample.h
     ${HEADERS_DIR}/graphlab.h
+    ${HEADERS_DIR}/colorschemesmodel.h
 )
 
 set(SOURCES
@@ -36,6 +37,7 @@ set(SOURCES
     ${SOURCES_DIR}/basicgraphparser.cpp
     ${SOURCES_DIR}/graphlab.cpp
     ${SOURCES_DIR}/randomgraphexample.cpp
+    ${SOURCES_DIR}/colorschemesmodel.cpp
 )
 
 set(RESOURCES
