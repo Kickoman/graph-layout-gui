@@ -4,6 +4,7 @@
 #include <QObject>
 #include "igraph.h"
 #include "graphlayout.h"
+#include "forcedgraphcalculator.h"
 
 class GraphLab : public QObject
 {
@@ -23,12 +24,29 @@ public:
     Q_INVOKABLE
     GraphLayout *getGraphLayout() const;
 
+    Q_INVOKABLE
+    void setAttractiveForce(const QString &force);
+    Q_INVOKABLE
+    void setRepulsiveForce(const QString &force);
+
+    Q_INVOKABLE
+    void setFrameSize(int width, int height);
+
+    Q_INVOKABLE
+    void setNodeSize(int width, int height);
+
+    Q_INVOKABLE
+    void recalculatePositions();
+
 signals:
     void layoutReady();
 
 private:
-    IGraph *graph = nullptr;
+    GraphCalculatorConfig config;
+    ForcedGraphCalculator::ForcedGraphConfig forces;
+    PositionedGraph *graph = nullptr;
     GraphLayout *graphLayout = nullptr;
+    ForcedGraphCalculator *calculator = nullptr;
 };
 
 #endif // GRAPHLAB_H

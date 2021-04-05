@@ -17,20 +17,21 @@ int RandomGraphExample::edgesCount() const
     return edgeList.size();
 }
 
-QVariant RandomGraphExample::node(int index) const
+PolymorphicTypes::Variant RandomGraphExample::node(int index) const
 {
     return nodes.at(index);
 }
 
-QPair<int, int> RandomGraphExample::edge(int index) const
+std::pair<int, int> RandomGraphExample::edge(int index) const
 {
-    return edgeList.at(index);
+    auto edge = edgeList.at(index);
+    return {edge.first, edge.second};
 }
 
-QVariant RandomGraphExample::edgeProperties(int index) const
+PolymorphicTypes::Variant RandomGraphExample::edgeProperties(int index) const
 {
     Q_UNUSED(index)
-    return QVariant();
+    return {};
 }
 
 bool RandomGraphExample::isAdjacent(int a, int b) const
@@ -38,10 +39,21 @@ bool RandomGraphExample::isAdjacent(int a, int b) const
     return matrix[a][b];
 }
 
+GraphGeometry::Point RandomGraphExample::nodePosition(int index) const
+{
+    return positions[index];
+}
+
+void RandomGraphExample::setNodePosition(int index, GraphGeometry::Point position)
+{
+    positions[index] = position;
+}
+
 void RandomGraphExample::generateRandom(int N, int M, unsigned int seed)
 {
     nodes.resize(N);
-    for (int i = 0; i < N; ++i) nodes[i] = QVariant(i);
+    positions.resize(N);
+    for (int i = 0; i < N; ++i) nodes[i] = PolymorphicTypes::Variant(i);
 
     matrix.resize(N);
     for (auto &line : matrix)
@@ -63,8 +75,6 @@ void RandomGraphExample::generateRandom(int N, int M, unsigned int seed)
     else
     {
         qDebug() << "Full graph";
-//        for (auto &line : matrix)
-//            line.fill(1);
         for (int i = 0; i < N - 1; ++i)
             for (int j = i + 1; j < N; ++j)
                 addEdge(i, j);

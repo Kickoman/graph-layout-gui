@@ -2,7 +2,7 @@
 #include "basicgraph.h"
 #include <QTextStream>
 
-bool BasicGraphParser::parseGraph(QString description, IGraph **res)
+bool BasicGraphParser::parseGraph(QString description, PositionedGraph **res)
 {
     QTextStream str(&description, QIODevice::ReadOnly);
     int nodesCount = 0;

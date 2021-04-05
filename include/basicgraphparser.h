@@ -3,11 +3,12 @@
 
 #include "igraph.h"
 #include <memory>
+#include <QString>
 
 class BasicGraphParser
 {
 public:
-    static bool parseGraph(QString description, IGraph **res);
+    static bool parseGraph(QString description, PositionedGraph **res);
 };
 
 #endif // BASICGRAPHPARSER_H

@@ -13,20 +13,21 @@ int BasicGraph::edgesCount() const
     return edgeList.size();
 }
 
-QVariant BasicGraph::node(int index) const
+PolymorphicTypes::Variant BasicGraph::node(int index) const
 {
-    return nodeList.at(index);
+    return PolymorphicTypes::Variant(nodeList.at(index).toStdString());
 }
 
-QPair<int, int> BasicGraph::edge(int index) const
+std::pair<int, int> BasicGraph::edge(int index) const
 {
-    return edgeList.at(index);
+    auto edge = edgeList.at(index);
+    return {edge.first, edge.second};
 }
 
-QVariant BasicGraph::edgeProperties(int index) const
+PolymorphicTypes::Variant BasicGraph::edgeProperties(int index) const
 {
     Q_UNUSED(index)
-    return QVariant();
+    return PolymorphicTypes::Variant();
 }
 
 bool BasicGraph::isAdjacent(int a, int b) const
@@ -42,6 +43,7 @@ void BasicGraph::setNodeValue(int nodeIndex, const QString &text)
 void BasicGraph::setNodesCount(int nodesCount)
 {
     nodeList.resize(nodesCount);
+    positions.resize(nodesCount);
     adjacencyMatrix.resize(nodesCount);
     for (auto &row : adjacencyMatrix)
         row.resize(nodesCount);
@@ -56,4 +58,14 @@ void BasicGraph::connectNodes(int a, int b)
         std::swap(a, b);
     if (!edgeList.contains({a, b}))
         edgeList.push_back({a, b});
+}
+
+GraphGeometry::Point BasicGraph::nodePosition(int index) const
+{
+    return positions[index];
+}
+
+void BasicGraph::setNodePosition(int index, GraphGeometry::Point position)
+{
+    positions[index] = position;
 }

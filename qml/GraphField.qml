@@ -116,11 +116,11 @@ Rectangle {
 
 
             onGraphRearrangeRequested: {
-                graphLayout.setRepulsiveForce(controls.repulsiveFormula)
-                graphLayout.setAttractiveForce(controls.attractiveFormula)
-                graphLayout.setFrameSize(field.canvasWidth, field.canvasHeight)
-                graphLayout.setNodeSize(graphView.getNodeWidth(), graphView.getNodeHeight())
-                graphLayout.recalculatePositions()
+                graphModel.setRepulsiveForce(controls.repulsiveFormula)
+                graphModel.setAttractiveForce(controls.attractiveFormula)
+                graphModel.setFrameSize(field.canvasWidth, field.canvasHeight)
+                graphModel.setNodeSize(graphView.getNodeWidth(), graphView.getNodeHeight())
+                graphModel.recalculatePositions()
             }
 
             onGraphRandomizeRequested: {
