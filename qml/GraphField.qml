@@ -21,13 +21,14 @@ Rectangle {
         }
 
         border.width: 0
-        color: "#276678"
-        title: "QmlApplication"
+        color: "#816C61"
+        title: "Graph arranging example"
+        textColor: "#E7DFC6"
     }
 
     Rectangle {
         id: workplace
-        color: "#d3e0ea"
+        color: "#E9F1F7"
 
         anchors {
             top: header.bottom
@@ -38,7 +39,7 @@ Rectangle {
 
         ZoomableField {
             id: field
-            canvasBackgroundColor: "#f6f5f5"
+            canvasBackgroundColor: "#E9F1F7"
 
             anchors.fill: parent
 
@@ -108,8 +109,9 @@ Rectangle {
 
             z: 10
 
-            backgroundColor: "#1687a7"
+            backgroundColor: "#E7DFC6"
             border.width: 0
+            textColor: "#131B23"
 
             anchors.fill: parent
             height: 1000

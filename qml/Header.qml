@@ -4,6 +4,7 @@ Rectangle {
     property string backgroundColor: "#276678"
     property string borderColor: "black"
     property string title: "The title"
+    property alias textColor: idTitle.color
 
     color: backgroundColor
     border.color: borderColor
@@ -16,5 +17,8 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: 10
+
+        fontSizeMode: Text.Fit
+        font.pixelSize: 20
     }
 }

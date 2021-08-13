@@ -3,6 +3,8 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
 Rectangle {
+    id: root
+
     property string backgroundColor: "blue"
     property string borderColor: "black"
     property string textColor: "black"
@@ -90,10 +92,12 @@ Rectangle {
                 columnSpacing: 10
 
                 Text {
+                    color: root.textColor
                     text: "Attractive formula:"
                 }
 
                 TextField {
+                    color: root.textColor
                     Layout.fillWidth: true
                     width: 50
                     id: attractiveInput
@@ -101,25 +105,47 @@ Rectangle {
                 }
 
                 Text {
+                    color: root.textColor
                     text: "Repulsive formula:"
                 }
                 TextField {
+                    color: root.textColor
                     Layout.fillWidth: true
                     id: repulsiveInput
                     text: "exp(-(x-500)/70)"
                 }
 
                 Button {
+                    background: Rectangle {
+                        anchors.fill: parent
+                        color: "#2274A5"
+                    }
+                    contentItem: Text {
+                        text: "Rearrange graph"
+                        color: "#E9F1F7"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
-                    text: "Rearrange graph"
                     onClicked: graphRearrangeRequested()
                 }
 
                 Button {
+                    background: Rectangle {
+                        anchors.fill: parent
+                        color: "#2274A5"
+                    }
+                    contentItem: Text {
+                        text: "Random positions"
+                        color: "#E9F1F7"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
-                    text: "Random positions"
                     onClicked: graphRandomizeRequested()
                 }
             }
