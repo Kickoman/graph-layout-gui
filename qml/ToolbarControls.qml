@@ -14,6 +14,8 @@ Rectangle {
 
     property alias repulsiveFormula: repulsiveInput.text
     property alias attractiveFormula: attractiveInput.text
+    property alias edgesRepulsiveFormula: edgesRepulsiveInput.text
+    property alias linesRepulsiveFormula: linesRepulsiveInput.text
 
     color: backgroundColor
     border.color: borderColor
@@ -113,6 +115,28 @@ Rectangle {
                     Layout.fillWidth: true
                     id: repulsiveInput
                     text: "exp(-(x-500)/70)"
+                }
+
+                Text {
+                    color: root.textColor
+                    text: "Edges repulsive formula:"
+                }
+                TextField {
+                    color: root.textColor
+                    Layout.fillWidth: true
+                    id: edgesRepulsiveInput
+                    text: "exp(-(x-500)/70)/7"
+                }
+
+                Text {
+                    color: root.textColor
+                    text: "Lines repulsive formula:"
+                }
+                TextField {
+                    color: root.textColor
+                    Layout.fillWidth: true
+                    id: linesRepulsiveInput
+                    text: "exp(-(x-500)/70)/500"
                 }
 
                 Button {

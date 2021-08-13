@@ -120,6 +120,8 @@ Rectangle {
             onGraphRearrangeRequested: {
                 graphLayout.setRepulsiveForce(controls.repulsiveFormula)
                 graphLayout.setAttractiveForce(controls.attractiveFormula)
+                graphLayout.setEdgesRepulsiveForce(controls.edgesRepulsiveFormula)
+                graphLayout.setLinesRepulsiveForce(controls.linesRepulsiveFormula)
                 graphLayout.setFrameSize(field.canvasWidth, field.canvasHeight)
                 graphLayout.setNodeSize(graphView.getNodeWidth(), graphView.getNodeHeight())
                 graphLayout.recalculatePositions()
