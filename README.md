@@ -11,4 +11,4 @@ That's an example project for graph-layout library.
 This project demonstrates how to use the mentioned library
 for drawing graphs.
 
-This readme file will be updated soon...
+Running example of this application can be accessed via [karasique.xyz](https://karasique.xyz/userspace/graph/) (WASM support required).
