@@ -1,0 +1,71 @@
+name: Deploy master WASM
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - uses: mymindstorm/setup-emsdk@v7
+    - uses: jurplel/install-qt-action@v2
+      with:
+        # Directory to install Qt
+        dir: # optional
+        # Version of Qt to install
+        version: '5.15.2'
+        # Host platform
+        host: # optional
+        # Target platform for build
+        target: 'desktop'
+        # Architecture for Windows/Android
+        arch: 'wasm_32' # optional
+        # Whether or not to install Qt dependencies on Linux
+        install-deps: 'true'
+        # Additional Qt modules to install
+        modules: # 'qtscript qtscripttools' # qtcharts, qtdatavis3d, qtpurchasing, qtvirtualkeyboard, qtwebengine, qtnetworkauth, qtwebglplugin, qtscript, debug_info
+        # Force a Qt mirror in case the default is not working
+        #mirror: # optional
+        # Whether or not to actually download Qt
+        cached: # optional, default is false
+        # Version of aqtinstall to use in case of issues
+        aqtversion: # optional, default is ==0.8
+        # Version of py7zr to use in case of issues
+        py7zrversion: # optional, default is ==0.6
+        # Any extra arguments to append to the back
+        extra: # optional
+    - name: Install Qt, compile and deploy
+      env:
+        DEPLOY_PKEY: ${{ secrets.GRAPH_DEPLOY_PKEY }}
+        DEPLOY_ADDR: ${{ secrets.GRAPH_DEPLOY_ADDR }}
+        DEPLOY_PORT: ${{ secrets.GRAPH_DEPLOY_PORT }}
+        DEPLOY_USER: ${{ secrets.GRAPH_DEPLOY_USER }}
+        DEPLOY_PATH: ${{ secrets.GRAPH_DEPLOY_PATH }}
+      run: |
+        emsdk install 1.39.8
+        emsdk activate --embedded 1.39.8
+        . $EMSDK/emsdk_env.sh
+        em++ --version
+        ls -lrt
+        ../Qt/5.15.2/wasm_32/bin/qmake -r graph-layout-gui.pro DEFINES+=DISABLE_THREADS DEFINES+=WASM_BUILD
+        ls -lrt
+        make
+        ls -lrt
+        mv src/graphgui.html src/index.html
+        zip graph-layout-wasm-5-15-2.zip src/graphgui.js src/graphgui.wasm src/index.html src/qtlogo.svg src/qtloader.js
+        ls -lrt
+        unzip -v graph-layout-wasm-5-15-2.zip
+        pwd
+        echo "$DEPLOY_PKEY" > deploy_pkey
+        chmod 600 deploy_pkey
+        scp -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P $DEPLOY_PORT graph-layout-wasm-5-15-2.zip $DEPLOY_USER@$DEPLOY_ADDR:/$DEPLOY_PATH
+        ssh -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR unzip $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
