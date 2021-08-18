@@ -1,4 +1,4 @@
-name: Build WASM
+name: Deploy master WASM
 
 on:
   push:
