@@ -47,7 +47,7 @@ jobs:
         . $EMSDK/emsdk_env.sh
         em++ --version
         ls -lrt
-        ../Qt/5.15.2/wasm_32/bin/qmake -r graph-layout-gui.pro
+        ../Qt/5.15.2/wasm_32/bin/qmake -r graph-layout-gui.pro DEFINES+=DISABLE_THREADS DEFINES+=WASM_BUILD
         ls -lrt
         make
         ls -lrt
