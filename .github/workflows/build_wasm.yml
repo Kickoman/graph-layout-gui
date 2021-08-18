@@ -58,11 +58,11 @@ jobs:
         make
         ls -lrt
         mv src/graphgui.html src/index.html
-        zip graph-layout-wasm-5-15-2.zip src/graphgui.js src/graphgui.wasm src/index.html qtlogo.svg qtloader.js
+        zip graph-layout-wasm-5-15-2.zip src/graphgui.js src/graphgui.wasm src/index.html src/qtlogo.svg src/qtloader.js
         ls -lrt
         unzip -v graph-layout-wasm-5-15-2.zip
         pwd
         echo "$DEPLOY_PKEY" > deploy_pkey
-        chmod deploy_pkey 600
+        chmod 600 deploy_pkey
         scp -i deploy_pkey -P $DEPLOY_PORT graph-layout-wasm-5-15-2.zip $DEPLOY_USER@$DEPLOY_ADDR:/$DEPLOY_PATH/
         ssh -i deploy_pkey -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR:$DEPLOY_PORT unzip $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
