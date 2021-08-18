@@ -73,3 +73,4 @@ obj/
 build/
 build*/
 *.pro.user
+.vscode/
