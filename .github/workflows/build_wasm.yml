@@ -68,4 +68,4 @@ jobs:
         echo "$DEPLOY_PKEY" > deploy_pkey
         chmod 600 deploy_pkey
         scp -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P $DEPLOY_PORT graph-layout-wasm-5-15-2.zip $DEPLOY_USER@$DEPLOY_ADDR:/$DEPLOY_PATH
-        ssh -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR unzip $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
+        ssh -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR unzip -o $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
