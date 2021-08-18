@@ -40,7 +40,13 @@ jobs:
         py7zrversion: # optional, default is ==0.6
         # Any extra arguments to append to the back
         extra: # optional
-    - name: Install Qt and compile
+    - name: Install Qt, compile and deploy
+      env:
+        DEPLOY_PKEY: ${{ secrets.GRAPH_DEPLOY_PKEY }}
+        DEPLOY_ADDR: ${{ secrets.GRAPH_DEPLOY_ADDR }}
+        DEPLOY_PORT: ${{ secrets.GRAPH_DEPLOY_PORT }}
+        DEPLOY_USER: ${{ secrets.GRAPH_DEPLOY_USER }}
+        DEPLOY_PATH: ${{ secrets.GRAPH_DEPLOY_PATH }}
       run: |
         emsdk install 1.39.8
         emsdk activate --embedded 1.39.8
@@ -56,3 +62,7 @@ jobs:
         ls -lrt
         unzip -v graph-layout-wasm-5-15-2.zip
         pwd
+        echo "$DEPLOY_PKEY" > deploy_pkey
+        chmod deploy_pkey 600
+        scp -i deploy_pkey -P $DEPLOY_PORT graph-layout-wasm-5-15-2.zip $DEPLOY_USER@$DEPLOY_ADDR:/$DEPLOY_PATH/
+        ssh -i deploy_pkey -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR:$DEPLOY_PORT unzip $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
