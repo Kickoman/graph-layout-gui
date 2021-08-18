@@ -62,15 +62,7 @@ jobs:
         ls -lrt
         unzip -v graph-layout-wasm-5-15-2.zip
         pwd
-        mkdir deploy
-        mv graph-layout-wasm-5-15-2.zip deploy/arch.zip
-
-    - name: Deploy
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.GRAPH_DEPLOY_ADDR }}
-        username: ${{ secrets.GRAPH_DEPLOY_USER }}
-        key: ${{ secrets.GRAPH_DEPLOY_PKEY }}
-        port: ${{ secrets.GRAPH_DEPLOY_PORT }}
-        source: "deploy/arch.zip"
-        target: ${{ secrets.GRAPH_DEPLOY_PATH }}
+        echo "$DEPLOY_PKEY" > deploy_pkey
+        chmod 600 deploy_pkey
+        scp -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P $DEPLOY_PORT graph-layout-wasm-5-15-2.zip $DEPLOY_USER@$DEPLOY_ADDR:/$DEPLOY_PATH
+        ssh -i deploy_pkey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_ADDR:$DEPLOY_PORT unzip $DEPLOY_PATH/graph-layout-wasm-5-15-2.zip -d $DEPLOY_PATH
