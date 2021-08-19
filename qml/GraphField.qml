@@ -41,7 +41,8 @@ Rectangle {
             id: field
             canvasBackgroundColor: "#E9F1F7"
 
-            anchors.fill: parent
+            width: controls.widthSliderValue
+            height: controls.heightSliderValue
 
             GraphView {
                 id: graphView
@@ -49,8 +50,6 @@ Rectangle {
 //                nodeDelegate: RoundGraphNode { }
                 nodeDelegate: RectangleGraphNode { }
             }
-
-            onDoubleClicked: controlsScroll.toggleVisibility()
         }
 
         Text {
@@ -75,7 +74,7 @@ Rectangle {
             value: field.zoom
             to: 10
             stepSize: 0.1
-            onValueChanged: field.setZoom(value, 0, 0)
+            onValueChanged: field.zoom = value
         }
     }
 
@@ -122,7 +121,7 @@ Rectangle {
                 graphLayout.setAttractiveForce(controls.attractiveFormula)
                 graphLayout.setEdgesRepulsiveForce(controls.edgesRepulsiveFormula)
                 graphLayout.setLinesRepulsiveForce(controls.linesRepulsiveFormula)
-                graphLayout.setFrameSize(field.canvasWidth, field.canvasHeight)
+                graphLayout.setFrameSize(field.width, field.height)
                 graphLayout.setNodeSize(graphView.getNodeWidth(), graphView.getNodeHeight())
                 graphLayout.recalculatePositions()
             }
