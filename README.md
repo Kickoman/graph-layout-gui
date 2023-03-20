@@ -8,10 +8,8 @@
 
 ## Description
 
-That's an example project for graph-layout library.
-This project demonstrates how to use the mentioned library
-for drawing graphs.
+This is an example project for the graph-layout library. The project demonstrates how to use the library to draw graphs.
 
-Running example of this application can be accessed via [link](https://kanstancin/userspace/src/) (WASM support required).
+You can access a running example of this application through this link (WASM support required).
 
-Latest binaries (currently for Windows only) can be downloaded at the [Releases](https://github.com/Kickoman/graph-layout-gui/releases) page.
+The latest binaries (currently available only for Windows) can be downloaded from the Releases page.
