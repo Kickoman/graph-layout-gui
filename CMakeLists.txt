@@ -40,6 +40,7 @@ set(SOURCES
 
 set(RESOURCES
     qml.qrc
+    assets.qrc
     ${GRAPH_LAYOUT_QML_RESOURCES}
 )
 
