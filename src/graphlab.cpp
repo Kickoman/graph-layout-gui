@@ -1,6 +1,6 @@
 #include "graphlab.h"
 #include "basicgraph.h"
-#include "graphlayout.h";
+#include "graphlayout.h"
 #include "basicgraphparser.h"
 #include <QTimer>
 
@@ -36,8 +36,6 @@ void fillRandomGraph(Graph* graph, const int n, int m, const unsigned int seed)
     else
     {
         qDebug() << "Full graph";
-//        for (auto &line : matrix)
-//            line.fill(1);
         for (int i = 0; i < n - 1; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 graph->connectNodes(i, j);

@@ -20,8 +20,8 @@ class GraphAdapter;
 class GraphLayout : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString attractiveForce WRITE setAttractiveForce)
-    Q_PROPERTY(QString repulsiveForce WRITE setRepulsiveForce)
+    Q_PROPERTY(QString attractiveForce READ getAttractiveForce WRITE setAttractiveForce)
+    Q_PROPERTY(QString repulsiveForce READ getRepulsiveForce WRITE setRepulsiveForce)
     Q_PROPERTY(int nodesCount READ nodesCount NOTIFY modelUpdated)
     Q_PROPERTY(int edgesCount READ edgesCount NOTIFY modelUpdated)
     Q_PROPERTY(QVariant nodesModel READ getNodesModel NOTIFY modelUpdated)
@@ -127,11 +127,25 @@ public:
     void setRepulsiveForce(const QString &formula);
 
     ///
+    /// \brief Getter for the repulsive force between nodes formula
+    /// \return QString with the formula in the kFunction format
+    ///
+    Q_INVOKABLE
+    QString getRepulsiveForce() const;
+
+    ///
     /// \brief Setter for the attractive force between nodes formula
     /// \param formula QString with the formula in the kFunction format
     ///
     Q_INVOKABLE
     void setAttractiveForce(const QString &formula);
+
+    ///
+    /// \brief Getter for the attractive force between nodes formula
+    /// \return QString with the formula in the kFunction format
+    ///
+    Q_INVOKABLE
+    QString getAttractiveForce() const;
 
     ///
     /// \brief Setter for the repulsive force between nodes and frame edges
@@ -191,8 +205,6 @@ private slots:
     void onGraphChanged();
 
 private:
-    mutable QMutex positionsLock;
-    QVector<GraphGeometry::D2::Point> positions;
     GraphCalculatorConfig config;
     GraphCalculator calculator;
     std::shared_ptr<GraphKeeper> graphKeeper;

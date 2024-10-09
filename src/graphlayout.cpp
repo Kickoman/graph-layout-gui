@@ -3,15 +3,10 @@
 #include "graphcalculator.h"
 #include "graphnodesproxymodel.h"
 #include "graphlineproxymodel.h"
-
 #include "basicgraph.h"
-#include <memory>
 
-#ifndef DISABLE_THREADS
-#include <QThreadPool>
-#endif // DISABLE_THREADS
-#include <QDebug>
 #include <QtConcurrent>
+#include <memory>
 
 GraphLayout::GraphLayout(std::shared_ptr<GraphKeeper> graph)
     : graphKeeper(graph)
@@ -20,7 +15,6 @@ GraphLayout::GraphLayout(std::shared_ptr<GraphKeeper> graph)
     , edgesModel(nullptr)
 {
     connect(graphKeeper.get(), &GraphKeeper::updated, this, &GraphLayout::positionsUpdated);
-    positions.resize(graph->getGraph()->nodesCount());
 }
 
 int GraphLayout::nodesCount() const
@@ -51,23 +45,20 @@ QVariant GraphLayout::edgeProperties(int index) const
 double GraphLayout::getNodeXPosition(int index) const
 {
     bool indexOkay = index > -1 && index < nodesCount();
-    // return indexOkay ? positions[index].x() : -1;
-    return indexOkay ? graphAdapter->nodePosition(index).x() : -1.;
+    return indexOkay ? graphKeeper->getGraph()->nodePosition(index).x() : -1.;
 }
 
 double GraphLayout::getNodeYPosition(int index) const
 {
     bool indexOkay = index > -1 && index < nodesCount();
-    // return indexOkay ? positions[index].y() : -1;
-    return indexOkay ? graphAdapter->nodePosition(index).y() : -1.;
+    return indexOkay ? graphKeeper->getGraph()->nodePosition(index).y() : -1.;
 }
 
 void GraphLayout::setNodeXPosition(int index, double x)
 {
     if (!qFuzzyCompare(getNodeXPosition(index), x))
     {
-        // positions[index] = GraphGeometry::D2::Point(x, getNodeYPosition(index));
-        graphAdapter->setNodePosition(index, GraphGeometry::D2::Point(x, getNodeYPosition(index)));
+        graphKeeper->getGraph()->setNodePosition(index, GraphGeometry::D2::Point(x, getNodeYPosition(index)));
         emit positionUpdated(index);
     }
 }
@@ -76,8 +67,7 @@ void GraphLayout::setNodeYPosition(int index, double y)
 {
     if (!qFuzzyCompare(getNodeYPosition(index), y))
     {
-        // positions[index] = GraphGeometry::D2::Point(getNodeXPosition(index), y);
-        graphAdapter->setNodePosition(index, GraphGeometry::D2::Point(getNodeXPosition(index), y));
+        graphKeeper->getGraph()->setNodePosition(index, GraphGeometry::D2::Point(getNodeXPosition(index), y));
         emit positionUpdated(index);
     }
 }
@@ -86,11 +76,12 @@ void GraphLayout::recalculatePositions()
 {
     // If something is being executed, wait for finish
     calculator.requestStop();
-    if (executionThread.joinable()) {
+    if (executionThread.joinable())
+    {
         executionThread.join();
     }
 
-    calculator.setGraph(graphAdapter.get());
+    calculator.setGraph(graphKeeper->GetWriteAdapter());
     calculator.setConfig(config);
     executionThread = std::thread(&GraphCalculator::run, &calculator);
 }
@@ -99,10 +90,11 @@ void GraphLayout::setRandomPositions()
 {
     auto area = std::max(config.nodeHeight * nodesCount(), config.nodeWidth * nodesCount());
     const auto n = nodesCount();
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         double x = rand() % int(area);
         double y = rand() % int(area);
-        graphAdapter->setNodePosition(i, GraphGeometry::D2::Point(x, y));
+        graphKeeper->getGraph()->setNodePosition(i, GraphGeometry::D2::Point(x, y));
     }
     emit positionsUpdated();
 }
@@ -117,9 +109,21 @@ void GraphLayout::setRepulsiveForce(const QString &formula)
     this->config.repulsiveForce = formula.toStdString();
 }
 
+QString GraphLayout::getRepulsiveForce() const
+{
+    // TODO: implement kfunction -> back to string
+    return QString("Repulsive formula is not implemented yet");
+}
+
 void GraphLayout::setAttractiveForce(const QString &formula)
 {
     this->config.attractiveForce = formula.toStdString();
+}
+
+QString GraphLayout::getAttractiveForce() const
+{
+    // TODO: implement kfunction -> back to string
+    return QString("Attractive formula is not implemented yet");
 }
 
 void GraphLayout::setEdgesRepulsiveForce(const QString &formula)
@@ -165,7 +169,6 @@ QVariant GraphLayout::getEdgesModel()
 void GraphLayout::setGraphKeeper(std::shared_ptr<GraphKeeper> graph)
 {
     this->graphKeeper = graph;
-    this->graphAdapter = graph->GetWriteAdapter();
     connect(graphKeeper.get(), &GraphKeeper::updated, this, &GraphLayout::positionsUpdated);
     emit modelUpdated();
 }
