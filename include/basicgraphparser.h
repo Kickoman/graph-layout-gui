@@ -1,13 +1,14 @@
 #ifndef BASICGRAPHPARSER_H
 #define BASICGRAPHPARSER_H
 
-#include "igraph.h"
-#include <memory>
+#include <QString>
+
+class Graph;
 
 class BasicGraphParser
 {
 public:
-    static bool parseGraph(QString description, IGraph **res);
+    static bool parseGraph(QString description, Graph &res);
 };
 
 #endif // BASICGRAPHPARSER_H

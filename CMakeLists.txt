@@ -15,8 +15,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Gui Widgets Qml QuickWidgets Concurrent REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui Widgets Qml QuickWidgets Concurrent REQUIRED)
 
 add_subdirectory(lib/graph-layout)
 
@@ -26,8 +26,11 @@ set(SOURCES_DIR "src")
 set(HEADERS
     ${HEADERS_DIR}/basicgraph.h
     ${HEADERS_DIR}/basicgraphparser.h
-    ${HEADERS_DIR}/randomgraphexample.h
+    # ${HEADERS_DIR}/randomgraphexample.h
     ${HEADERS_DIR}/graphlab.h
+    ${HEADERS_DIR}/graphlayout.h
+    ${HEADERS_DIR}/graphlineproxymodel.h
+    ${HEADERS_DIR}/graphnodesproxymodel.h
 )
 
 set(SOURCES
@@ -35,7 +38,10 @@ set(SOURCES
     ${SOURCES_DIR}/basicgraph.cpp
     ${SOURCES_DIR}/basicgraphparser.cpp
     ${SOURCES_DIR}/graphlab.cpp
-    ${SOURCES_DIR}/randomgraphexample.cpp
+    # ${SOURCES_DIR}/randomgraphexample.cpp
+    ${SOURCES_DIR}/graphlayout.cpp
+    ${SOURCES_DIR}/graphlineproxymodel.cpp
+    ${SOURCES_DIR}/graphnodesproxymodel.cpp
 )
 
 set(RESOURCES
@@ -65,5 +71,6 @@ target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Qml
     Qt${QT_VERSION_MAJOR}::QuickWidgets
+    Qt${QT_VERSION_MAJOR}::Concurrent
     graphlayout
 )

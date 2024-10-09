@@ -50,43 +50,9 @@ Rectangle {
         source: "qrc:///assets/bg.png"
     }
 
-//    Grid {
-//        id: mainGrid
-//        anchors.fill: parent
-
-//        property int squareSize: 50
-
-//        spacing: 0
-//        rows: parent.height / squareSize
-//        columns: parent.width / squareSize
-
-//        Repeater {
-//            model: mainGrid.rows * mainGrid.columns
-
-//            Rectangle {
-//                width: mainGrid.squareSize
-//                height: mainGrid.squareSize
-
-//                function getRowNumber() { return Math.floor(index / mainGrid.columns) }
-//                function getColNumber() { return index - (mainGrid.columns * getRowNumber()) }
-
-//                function getColor() {
-//                    var rowNumber = getRowNumber()
-//                    var colNumber = getColNumber()
-
-//                    if (rowNumber % 2 == 0)
-//                        return colNumber % 2 ? "#f6f5f5" : "#d3e0ea"
-//                    return colNumber % 2 ? "#d3e0ea" : "#f6f5f5"
-//                }
-
-//                color: getColor()
-//            }
-//        }
-//    }
-
     Repeater {
         id: nodesRepeater
-        model: root.model.nodesModel
+        model: if (root.model) root.model.nodesModel
         onCountChanged: {
             linesRepeater.model = null
             linesRepeater.model = root.model.edgesModel
@@ -95,7 +61,7 @@ Rectangle {
 
     Repeater {
         id: linesRepeater
-        model: root.model.edgesModel
+        model: if (root.model) root.model.edgesModel
         delegate: GraphLine {
             z: parent.z + 1
             startX: getNodeX(model.startNodeIndex)
@@ -105,6 +71,6 @@ Rectangle {
         }
     }
 
-    onHeightChanged: model.setFrameSize(root.width, root.height)
-    onWidthChanged: model.setFrameSize(root.width, root.height)
+    onHeightChanged: if (model) model.setFrameSize(root.width, root.height)
+    onWidthChanged: if (model) model.setFrameSize(root.width, root.height)
 }

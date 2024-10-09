@@ -3,17 +3,15 @@
 #include <QTextStream>
 #include <QIODevice>
 
-bool BasicGraphParser::parseGraph(QString description, IGraph **res)
+
+bool BasicGraphParser::parseGraph(QString description, Graph &res)
 {
     QTextStream str(&description, QIODevice::ReadOnly);
     int nodesCount = 0;
     int edgesCount = 0;
     str >> nodesCount >> edgesCount;
 
-    auto *graph = new BasicGraph();
-    *res = graph;
-
-    graph->setNodesCount(nodesCount);
+    res.setNodesCount(nodesCount);
 
     for (int i = 0; i < edgesCount; ++i)
     {
@@ -21,7 +19,7 @@ bool BasicGraphParser::parseGraph(QString description, IGraph **res)
         str >> a >> b;
         --a;
         --b;
-        graph->connectNodes(a, b);
+        res.connectNodes(a, b);
     }
 
     int values = 0;
@@ -32,7 +30,7 @@ bool BasicGraphParser::parseGraph(QString description, IGraph **res)
         int index = 0;
         QString value;
         str >> index >> value;
-        graph->setNodeValue(index - 1, value);
+        res.setNodeValue(index - 1, value);
     }
     return true;
 }
