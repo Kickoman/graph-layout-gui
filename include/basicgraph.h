@@ -144,7 +144,10 @@ public:
         return graph->edgesCount();
     }
     std::pair<int, int> edge(int index) const override {
-        return graph->edge(index);
+        return {
+            graph->edge(index).first,
+            graph->edge(index).second,
+        };
     }
     PointType nodePosition(int index) const override {
         return graph->nodePosition(index);
