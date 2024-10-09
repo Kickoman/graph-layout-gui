@@ -3,6 +3,8 @@
 #include "graphlayout.h"
 #include "basicgraphparser.h"
 #include <QTimer>
+#include <QDebug>
+
 
 GraphLab::GraphLab(QObject *parent)
     : QObject(parent)
