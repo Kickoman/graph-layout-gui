@@ -5,6 +5,7 @@
         <file>qml/Graph/GraphNode.qml</file>
         <file>qml/RoundGraphNode.qml</file>
         <file>qml/RectangleGraphNode.qml</file>
+        <file>qmldir</file>
     </qresource>
     <qresource prefix="/">
         <file>qml/Header.qml</file>
