@@ -8,13 +8,16 @@
 #include <QCommandLineOption>
 #include <QInputDialog>
 #include <QTimer>
+#include <QFile>
 #include <ctime>
 
 #include "graphlab.h"
 
 int main(int argc, char *argv[])
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling);
+#endif // QT_VERSION
     QCoreApplication::setApplicationName("Graph lab");
 
     QApplication a(argc, argv);

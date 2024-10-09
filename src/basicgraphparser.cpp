@@ -1,6 +1,7 @@
 #include "basicgraphparser.h"
 #include "basicgraph.h"
 #include <QTextStream>
+#include <QIODevice>
 
 bool BasicGraphParser::parseGraph(QString description, IGraph **res)
 {

@@ -74,3 +74,4 @@ build/
 build*/
 *.pro.user
 .vscode/
+.cache/
