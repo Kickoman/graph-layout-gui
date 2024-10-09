@@ -2,8 +2,10 @@
 #define GRAPHLAB_H
 
 #include <QObject>
-#include "igraph.h"
+#include <memory>
 #include "graphlayout.h"
+
+class GraphKeeper;
 
 class GraphLab : public QObject
 {
@@ -27,8 +29,8 @@ signals:
     void layoutReady();
 
 private:
-    IGraph *graph = nullptr;
     GraphLayout *graphLayout = nullptr;
+    std::shared_ptr<GraphKeeper> graphKeeper;
 };
 
 #endif // GRAPHLAB_H

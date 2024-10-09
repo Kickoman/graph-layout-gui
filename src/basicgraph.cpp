@@ -1,45 +1,54 @@
 #include "basicgraph.h"
+#include <QVariant>
 
-BasicGraph::BasicGraph()
+
+Graph::Graph()
 = default;
 
-int BasicGraph::nodesCount() const
+int Graph::nodesCount() const
 {
     return nodeList.size();
 }
 
-int BasicGraph::edgesCount() const
+int Graph::edgesCount() const
 {
     return edgeList.size();
 }
 
-QVariant BasicGraph::node(int index) const
-{
-    return nodeList.at(index);
+void Graph::clearEdges() {
+    edgeList.clear();
+    for (auto& row : adjacencyMatrix) {
+        row.fill(0);
+    }
 }
 
-QPair<int, int> BasicGraph::edge(int index) const
+QVariant Graph::node(int index) const
+{
+    return nodeList.at(index).first;
+}
+
+QPair<int, int> Graph::edge(int index) const
 {
     return edgeList.at(index);
 }
 
-QVariant BasicGraph::edgeProperties(int index) const
+QVariant Graph::edgeProperties(int index) const
 {
     Q_UNUSED(index)
     return QVariant();
 }
 
-bool BasicGraph::isAdjacent(int a, int b) const
+bool Graph::isAdjacent(int a, int b) const
 {
     return adjacencyMatrix[a][b] == 1;
 }
 
-void BasicGraph::setNodeValue(int nodeIndex, const QString &text)
+void Graph::setNodeValue(int nodeIndex, const QString &text)
 {
-    nodeList[nodeIndex] = text;
+    nodeList[nodeIndex].first = text;
 }
 
-void BasicGraph::setNodesCount(int nodesCount)
+void Graph::setNodesCount(int nodesCount)
 {
     nodeList.resize(nodesCount);
     adjacencyMatrix.resize(nodesCount);
@@ -47,7 +56,7 @@ void BasicGraph::setNodesCount(int nodesCount)
         row.resize(nodesCount);
 }
 
-void BasicGraph::connectNodes(int a, int b)
+void Graph::connectNodes(int a, int b)
 {
     adjacencyMatrix[a][b] = 1;
     adjacencyMatrix[b][a] = 1;
@@ -56,4 +65,12 @@ void BasicGraph::connectNodes(int a, int b)
         std::swap(a, b);
     if (!edgeList.contains({a, b}))
         edgeList.push_back({a, b});
+}
+
+PointType Graph::nodePosition(int index) const {
+    return nodeList[index].second;
+}
+
+void Graph::setNodePosition(int index, PointType point) {
+    nodeList[index].second = point;
 }
