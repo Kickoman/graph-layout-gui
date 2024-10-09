@@ -7,6 +7,7 @@
 #include <QMutex>
 #include <QObject>
 #include <memory>
+#include <functional>
 
 
 using PointType = GraphGeometry::D2::Point;
