@@ -47,22 +47,19 @@ Rectangle {
             GraphView {
                 id: graphView
                 model: graphLayout
-//                nodeDelegate: RoundGraphNode { }
-                nodeDelegate: RectangleGraphNode { }
+                nodeDelegate: RoundGraphNode { debug: true }
+                // edgeDelegate: GraphLine { debug: true }
+                // nodeDelegate: RectangleGraphNode { }
             }
         }
 
         Text {
             id: debugText
-            text: "Actual canvas size: " + field.width + "x" + field.height +
+            text: "Size: " + field.width + "x" + field.height +
                   "\nZoom: " + field.zoom +
-                  "\nFlickable size: " + field.width + "x" + field.height +
-                  "\nPosition: " + field.contentX + ", " + field.contentY +
                   "\nContent size:" + field.contentWidth + "x" + field.contentHeight
 
-            width: 300
-            height: 100
-            z: 10
+            z: 1000
             anchors.bottom: parent.bottom
             anchors.left: parent.left
         }

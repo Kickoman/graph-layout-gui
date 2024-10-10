@@ -55,5 +55,7 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/qml/main.qml"));
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.showMaximized();
+
+    // program->generateGraph(3, 6);
     return a.exec();
 }

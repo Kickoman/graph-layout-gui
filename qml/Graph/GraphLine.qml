@@ -8,6 +8,7 @@ Shape {
     property int startY: 0
     property int finishX: 0
     property int finishY: 0
+    property bool debug: false
 
     width: Math.abs(startX - finishX)
     height: Math.abs(startY - finishY)
@@ -25,5 +26,12 @@ Shape {
             x: root.finishX
             y: root.finishY
         }
+    }
+
+    Text {
+        // visible: root.debug
+        text: Math.sqrt(Math.pow(root.startX - root.finishX, 2) + Math.pow(root.startY - root.finishY, 2))
+        x: (root.startX + root.finishX) / 2
+        y: (root.startY + root.finishY) / 2
     }
 }

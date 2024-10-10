@@ -103,7 +103,8 @@ Rectangle {
                     Layout.fillWidth: true
                     width: 50
                     id: attractiveInput
-                    text: "exp((x-100)/1000)"
+                    // text: "exp((x-100)/1000)"
+                    text: "x/10"
                 }
 
                 Text {
@@ -114,7 +115,8 @@ Rectangle {
                     color: root.textColor
                     Layout.fillWidth: true
                     id: repulsiveInput
-                    text: "exp(-(x-500)/70)"
+                    // text: "exp(-(x-500)/70)"
+                    text: "1000/(((x+100)/100)^2)"
                 }
 
                 Text {
@@ -125,7 +127,8 @@ Rectangle {
                     color: root.textColor
                     Layout.fillWidth: true
                     id: edgesRepulsiveInput
-                    text: "exp(-(x-500)/70)/7"
+                    // text: "exp(-(x-500)/70)/7"
+                    text: "100/(((x+150)/100))"
                 }
 
                 Text {

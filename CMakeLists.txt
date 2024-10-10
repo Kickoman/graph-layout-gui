@@ -26,7 +26,6 @@ set(SOURCES_DIR "src")
 set(HEADERS
     ${HEADERS_DIR}/basicgraph.h
     ${HEADERS_DIR}/basicgraphparser.h
-    # ${HEADERS_DIR}/randomgraphexample.h
     ${HEADERS_DIR}/graphlab.h
     ${HEADERS_DIR}/graphlayout.h
     ${HEADERS_DIR}/graphlineproxymodel.h
@@ -38,7 +37,6 @@ set(SOURCES
     ${SOURCES_DIR}/basicgraph.cpp
     ${SOURCES_DIR}/basicgraphparser.cpp
     ${SOURCES_DIR}/graphlab.cpp
-    # ${SOURCES_DIR}/randomgraphexample.cpp
     ${SOURCES_DIR}/graphlayout.cpp
     ${SOURCES_DIR}/graphlineproxymodel.cpp
     ${SOURCES_DIR}/graphnodesproxymodel.cpp
