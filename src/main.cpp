@@ -56,6 +56,6 @@ int main(int argc, char *argv[])
     view.setResizeMode(QQuickView::ResizeMode::SizeRootObjectToView);
     view.showMaximized();
 
-    program->generateGraph(4, 6);
+    // program->generateGraph(3, 6);
     return a.exec();
 }
