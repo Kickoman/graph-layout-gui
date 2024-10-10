@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick
 
 Item {
 
@@ -37,7 +37,7 @@ Item {
         drag.target: root
         drag.axis: Drag.XAndYAxis
 
-        onWheel: {
+        onWheel: (wheel) => {
             var sign = wheel.angleDelta.y > 0 ? 1 : -1
             setZoom(zoom + 0.1 * sign, mouseX, mouseY)
         }

@@ -54,16 +54,18 @@ Item {
 
     Behavior on x {
         enabled: !parent.isDragged
-        SmoothedAnimation {
+        SpringAnimation {
             id: xAnimation
-            velocity: 100
+            spring: 2
+            damping: 0.2
         }
     }
     Behavior on y {
         enabled: !parent.isDragged
-        SmoothedAnimation {
+        SpringAnimation {
             id: yAnimation
-            velocity: 100
+            spring: 2
+            damping: 0.2
         }
     }
 }
